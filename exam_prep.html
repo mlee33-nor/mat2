@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MAT151 Ch 6.1–6.4 Exam Prep</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  :root{--bg:#0f1220;--card:#1a1f36;--accent:#7aa2ff;--good:#4ade80;--bad:#f87171;--muted:#a0a8c0;--text:#eef0ff;}
+  *{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;}
+  header{background:linear-gradient(135deg,#232a55,#0f1220);padding:18px 24px;border-bottom:2px solid #2a3060;}
+  h1{margin:0;font-size:22px;}
+  .tagline{color:var(--muted);font-size:13px;margin-top:4px;}
+  nav{display:flex;flex-wrap:wrap;gap:6px;padding:10px 24px;background:#151a2e;border-bottom:1px solid #2a3060;position:sticky;top:0;z-index:10;}
+  nav button{background:#232a55;color:var(--text);border:1px solid #3a4288;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:13px;}
+  nav button:hover{background:#2e376e;}
+  nav button.active{background:var(--accent);color:#111;font-weight:600;}
+  main{padding:20px 24px;max-width:1100px;margin:0 auto;}
+  .section{display:none;}
+  .section.active{display:block;}
+  .card{background:var(--card);border:1px solid #2a3060;border-radius:10px;padding:18px;margin-bottom:16px;}
+  h2{margin-top:0;color:var(--accent);}
+  h3{color:#c0c8ff;margin-top:18px;border-bottom:1px solid #2a3060;padding-bottom:6px;}
+  .problem{background:#111528;padding:16px;border-radius:8px;border-left:4px solid var(--accent);margin-top:10px;font-size:17px;}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+  button.primary{background:var(--accent);color:#111;border:0;padding:10px 16px;font-weight:600;border-radius:6px;cursor:pointer;}
+  button.primary:hover{opacity:.9;}
+  button.ghost{background:transparent;color:var(--text);border:1px solid #3a4288;padding:10px 16px;border-radius:6px;cursor:pointer;}
+  button.ghost:hover{background:#232a55;}
+  input[type=text]{background:#0b0e1c;color:var(--text);border:1px solid #3a4288;padding:10px;border-radius:6px;font-size:16px;width:260px;}
+  .answer-box{margin-top:12px;padding:12px;border-radius:6px;}
+  .answer-box.good{background:rgba(74,222,128,.1);border:1px solid var(--good);}
+  .answer-box.bad{background:rgba(248,113,113,.1);border:1px solid var(--bad);}
+  .solution{background:#0b0e1c;padding:12px;border-radius:6px;margin-top:10px;border-left:3px solid var(--muted);font-size:14px;}
+  .stats{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px;}
+  .stats span b{color:var(--text);}
+  .mastery{height:8px;background:#2a3060;border-radius:4px;overflow:hidden;margin-top:6px;}
+  .mastery > div{height:100%;background:linear-gradient(90deg,#f87171,#fbbf24,#4ade80);transition:width .4s;}
+  .lesson p,.lesson li{line-height:1.6;}
+  .lesson code{background:#0b0e1c;padding:2px 6px;border-radius:4px;}
+  table{border-collapse:collapse;margin:10px 0;}
+  td,th{border:1px solid #3a4288;padding:8px 12px;}
+  th{background:#232a55;}
+  .badge{display:inline-block;background:#2a3060;color:var(--accent);font-size:11px;padding:2px 8px;border-radius:10px;margin-left:8px;}
+  .hint{color:var(--muted);font-size:13px;margin-top:6px;}
+  .topic-select{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+  .topic-select label{background:#232a55;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:13px;}
+  .topic-select input{margin-right:4px;}
+  .difficulty{display:inline-flex;gap:4px;margin-left:12px;}
+  .difficulty button{background:#232a55;color:var(--muted);border:1px solid #3a4288;padding:4px 10px;border-radius:4px;font-size:12px;cursor:pointer;}
+  .difficulty button.active{background:var(--accent);color:#111;}
+  details{margin-top:8px;}
+  summary{cursor:pointer;color:var(--accent);}
+  .flash{display:inline-block;padding:4px 10px;border-radius:4px;margin-left:8px;font-size:12px;}
+  .flash.correct{background:var(--good);color:#111;}
+  .flash.wrong{background:var(--bad);color:#111;}
+  .streak{font-size:14px;color:#fbbf24;}
+  ul{line-height:1.7;}
+</style>
+</head>
+<body>
+<header>
+  <h1>MAT151 · Ch 6.1–6.4 · Interactive Exam Prep</h1>
+  <div class="tagline">Exponential &amp; Logarithmic Functions — Master lessons with unlimited randomized problems.</div>
+</header>
+
+<nav id="nav"></nav>
+
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="section" id="sec-overview">
+  <div class="card">
+    <h2>Exam Prep Overview</h2>
+    <p>This tool covers every lesson in Chapters 6.1–6.4. Each section has a quick concept sheet plus an unlimited problem generator that produces fresh numbers and re-phrases the question in multiple styles so you never memorize a single form.</p>
+    <h3>Sections</h3>
+    <ul>
+      <li><b>6.1 · Exponential Functions</b> — Definition of $b^x$, evaluating, properties, graph characteristics (domain, range, intercepts, asymptote).</li>
+      <li><b>6.2 · Transformations &amp; the number $e$</b> — Shifts, reflections, $e^x$, updated domain/range/asymptote.</li>
+      <li><b>6.3 · Logarithms</b> — Definition ($x=b^y \Leftrightarrow y=\log_b x$), exp↔log conversion, evaluating, cancellation identities $\log_b b^x=x$ and $b^{\log_b x}=x$.</li>
+      <li><b>6.4 · Logarithmic Graphs</b> — Domain from argument $>0$, vertical asymptote at argument $=0$, x-intercept, sketching via power-of-base $x$ values.</li>
+    </ul>
+    <h3>How to use</h3>
+    <ol>
+      <li>Read the <b>Concept Sheet</b> inside each section.</li>
+      <li>Pick a difficulty &amp; click <b>New Problem</b>. Answer in the box or try it on paper first.</li>
+      <li>Click <b>Check</b> to grade, or <b>Show Solution</b> for full worked steps.</li>
+      <li>Progress, streaks, and mastery are saved in your browser automatically.</li>
+    </ol>
+    <div class="card" style="background:#0b0e1c;margin-top:10px;">
+      <h3 style="margin-top:0">Overall Mastery</h3>
+      <div id="overallStats"></div>
+    </div>
+    <button class="ghost" onclick="resetAll()">Reset all progress</button>
+  </div>
+</section>
+
+<!-- ============ 6.1 ============ -->
+<section class="section" id="sec-61">
+  <div class="card lesson">
+    <h2>6.1 · Exponential Functions <span class="badge">Concept Sheet</span></h2>
+    <p><b>Definition.</b> An exponential function has the form $f(x)=b^x$ where $b>0$, $b\ne 1$, $x\in\mathbb{R}$.</p>
+    <ul>
+      <li>For each real $x$, $b^x$ is a unique real number.</li>
+      <li>All rational-exponent rules extend to irrational exponents.</li>
+      <li>If $b^a = b^c$ then $a=c$ (one-to-one).</li>
+      <li>If $b>1$ the function <b>grows</b>; if $0<b<1$ it <b>decays</b>.</li>
+    </ul>
+    <h3>Standard graph properties of $f(x)=b^x$</h3>
+    <table>
+      <tr><th></th><th>$b>1$ (growth)</th><th>$0<b<1$ (decay)</th></tr>
+      <tr><td>Domain</td><td>$(-\infty,\infty)$</td><td>$(-\infty,\infty)$</td></tr>
+      <tr><td>Range</td><td>$(0,\infty)$</td><td>$(0,\infty)$</td></tr>
+      <tr><td>Horizontal asymptote</td><td>$y=0$</td><td>$y=0$</td></tr>
+      <tr><td>y-intercept</td><td>$(0,1)$</td><td>$(0,1)$</td></tr>
+      <tr><td>x-intercept</td><td>none</td><td>none</td></tr>
+      <tr><td>One-to-one?</td><td>Yes</td><td>Yes</td></tr>
+    </table>
+    <p class="hint">Key memory hook: every pure $b^x$ graph passes through $(0,1)$ and hugs $y=0$ on one side.</p>
+  </div>
+
+  <div class="card">
+    <h3>Practice · Unlimited Problems</h3>
+    <div class="topic-select" id="topics-61"></div>
+    <div>Difficulty: <span class="difficulty" data-for="61"></span></div>
+    <div id="prob-61" class="problem"></div>
+    <div class="controls">
+      <input type="text" id="ans-61" placeholder="Your answer…" onkeydown="if(event.key==='Enter')checkAns('61')">
+      <button class="primary" onclick="checkAns('61')">Check</button>
+      <button class="ghost" onclick="showSol('61')">Show Solution</button>
+      <button class="ghost" onclick="newProb('61')">New Problem ↻</button>
+    </div>
+    <div id="fb-61"></div>
+    <div id="sol-61"></div>
+    <div class="stats" id="stats-61"></div>
+    <div class="mastery"><div id="mast-61" style="width:0%"></div></div>
+  </div>
+</section>
+
+<!-- ============ 6.2 ============ -->
+<section class="section" id="sec-62">
+  <div class="card lesson">
+    <h2>6.2 · Transformations &amp; $e^x$ <span class="badge">Concept Sheet</span></h2>
+    <p><b>The number $e\approx 2.71828\ldots$</b> Because $2<e<3$, the graph of $y=e^x$ lies between $y=2^x$ and $y=3^x$ — closer in shape to $y=3^x$.</p>
+    <h3>Transformations of $y=b^x$</h3>
+    <ul>
+      <li>$y=b^{x+c}$ — shift <b>left</b> $c$ units (argument change).</li>
+      <li>$y=b^{x-c}$ — shift <b>right</b> $c$ units.</li>
+      <li>$y=b^x+k$ — shift <b>up</b> $k$; new asymptote $y=k$.</li>
+      <li>$y=b^x-k$ — shift <b>down</b> $k$; new asymptote $y=-k$.</li>
+      <li>$y=-b^x$ — reflect over x-axis; range becomes $(-\infty,0)$.</li>
+      <li>$y=b^{-x}$ — reflect over y-axis (growth ↔ decay).</li>
+    </ul>
+    <p><b>Finding features after a transformation of $y=b^x+k$-style:</b></p>
+    <ul>
+      <li><b>Asymptote</b>: whatever the vertical shift is.</li>
+      <li><b>y-intercept</b>: plug $x=0$.</li>
+      <li><b>x-intercept</b>: set $y=0$ and solve (may not exist).</li>
+      <li><b>Domain</b>: still $(-\infty,\infty)$.</li>
+      <li><b>Range</b>: shift $(0,\infty)$ by the same vertical shift / reflection.</li>
+    </ul>
+    <p><b>One-to-one:</b> $y=b^x$ is one-to-one (horizontal line test) — so it has an inverse, which is the logarithm.</p>
+  </div>
+
+  <div class="card">
+    <h3>Practice · Unlimited Problems</h3>
+    <div class="topic-select" id="topics-62"></div>
+    <div>Difficulty: <span class="difficulty" data-for="62"></span></div>
+    <div id="prob-62" class="problem"></div>
+    <div class="controls">
+      <input type="text" id="ans-62" placeholder="Your answer…" onkeydown="if(event.key==='Enter')checkAns('62')">
+      <button class="primary" onclick="checkAns('62')">Check</button>
+      <button class="ghost" onclick="showSol('62')">Show Solution</button>
+      <button class="ghost" onclick="newProb('62')">New Problem ↻</button>
+    </div>
+    <div id="fb-62"></div>
+    <div id="sol-62"></div>
+    <div class="stats" id="stats-62"></div>
+    <div class="mastery"><div id="mast-62" style="width:0%"></div></div>
+  </div>
+</section>
+
+<!-- ============ 6.3 ============ -->
+<section class="section" id="sec-63">
+  <div class="card lesson">
+    <h2>6.3 · Logarithms <span class="badge">Concept Sheet</span></h2>
+    <p><b>Definition.</b> For $b>0,\;b\ne 1$:
+    $$x=b^y \;\Longleftrightarrow\; y=\log_b x$$
+    Read: "$y$ is the exponent on base $b$ that yields $x$."</p>
+    <p><b>Mantra:</b> <i>a logarithm is an exponent.</i></p>
+    <h3>Special notations</h3>
+    <ul>
+      <li>$\log x$ means $\log_{10} x$ (common log).</li>
+      <li>$\ln x$ means $\log_e x$ (natural log).</li>
+    </ul>
+    <h3>Cancellation / Inverse identities</h3>
+    <ul>
+      <li>$\log_b b^x = x$ &nbsp; (log of base-to-a-power returns the exponent)</li>
+      <li>$b^{\log_b x}=x$</li>
+      <li>Special cases: $\log 10^x = x$, &nbsp; $\ln e^x = x$, &nbsp; $10^{\log x}=x$, &nbsp; $e^{\ln x}=x$.</li>
+    </ul>
+    <h3>Conversion drill</h3>
+    <table>
+      <tr><th>Exponential</th><th>Logarithmic</th></tr>
+      <tr><td>$4^{-2}=\tfrac{1}{16}$</td><td>$\log_4 \tfrac{1}{16}=-2$</td></tr>
+      <tr><td>$c^y=x$</td><td>$\log_c x=y$</td></tr>
+      <tr><td>$3^2=9$</td><td>$\log_3 9=2$</td></tr>
+      <tr><td>$e^x=y$</td><td>$\ln y = x$</td></tr>
+      <tr><td>$10^y=x$</td><td>$\log x=y$</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Practice · Unlimited Problems</h3>
+    <div class="topic-select" id="topics-63"></div>
+    <div>Difficulty: <span class="difficulty" data-for="63"></span></div>
+    <div id="prob-63" class="problem"></div>
+    <div class="controls">
+      <input type="text" id="ans-63" placeholder="Your answer…" onkeydown="if(event.key==='Enter')checkAns('63')">
+      <button class="primary" onclick="checkAns('63')">Check</button>
+      <button class="ghost" onclick="showSol('63')">Show Solution</button>
+      <button class="ghost" onclick="newProb('63')">New Problem ↻</button>
+    </div>
+    <div id="fb-63"></div>
+    <div id="sol-63"></div>
+    <div class="stats" id="stats-63"></div>
+    <div class="mastery"><div id="mast-63" style="width:0%"></div></div>
+  </div>
+</section>
+
+<!-- ============ 6.4 ============ -->
+<section class="section" id="sec-64">
+  <div class="card lesson">
+    <h2>6.4 · Logarithmic Graphs <span class="badge">Concept Sheet</span></h2>
+    <p>$y=\log_b x$ is the inverse of $y=b^x$ — reflect across $y=x$.</p>
+    <h3>Parent $y=\log_b x$ (assume $b>1$)</h3>
+    <table>
+      <tr><td>Domain</td><td>$(0,\infty)$</td></tr>
+      <tr><td>Range</td><td>$(-\infty,\infty)$</td></tr>
+      <tr><td>Vertical asymptote</td><td>$x=0$</td></tr>
+      <tr><td>x-intercept</td><td>$(1,0)$</td></tr>
+      <tr><td>y-intercept</td><td>none</td></tr>
+    </table>
+    <h3>Rules for $y=\log_b(\text{argument})$</h3>
+    <ul>
+      <li><b>Domain</b>: set <i>argument</i> $>0$ and solve.</li>
+      <li><b>Vertical asymptote</b>: set <i>argument</i> $=0$ and solve.</li>
+      <li><b>x-intercept</b>: set $y=0$, i.e. argument $=1$.</li>
+      <li>The larger $b$, the closer the graph hugs the x-axis.</li>
+      <li>Range of ALL basic log graphs is $(-\infty,\infty)$.</li>
+    </ul>
+    <h3>Building an x-y chart</h3>
+    <p>Choose $x$ so the <i>argument</i> is a power of the base — then $\log_b b^n = n$.</p>
+    <p>Example values for $y=\log_2 x$: pick $x=\tfrac14,\tfrac12,1,2,4,8$ → $y=-2,-1,0,1,2,3$.</p>
+  </div>
+
+  <div class="card">
+    <h3>Practice · Unlimited Problems</h3>
+    <div class="topic-select" id="topics-64"></div>
+    <div>Difficulty: <span class="difficulty" data-for="64"></span></div>
+    <div id="prob-64" class="problem"></div>
+    <div class="controls">
+      <input type="text" id="ans-64" placeholder="Your answer…" onkeydown="if(event.key==='Enter')checkAns('64')">
+      <button class="primary" onclick="checkAns('64')">Check</button>
+      <button class="ghost" onclick="showSol('64')">Show Solution</button>
+      <button class="ghost" onclick="newProb('64')">New Problem ↻</button>
+    </div>
+    <div id="fb-64"></div>
+    <div id="sol-64"></div>
+    <div class="stats" id="stats-64"></div>
+    <div class="mastery"><div id="mast-64" style="width:0%"></div></div>
+  </div>
+</section>
+
+<!-- ============ MIXED EXAM ============ -->
+<section class="section" id="sec-exam">
+  <div class="card">
+    <h2>Mixed Mock Exam</h2>
+    <p>Randomized problems pulled from every section. Build your own exam of any length, check each one, then review the score at the end.</p>
+    <div class="controls">
+      <label>Length: <input type="number" id="exam-len" value="15" min="5" max="50" style="width:70px;background:#0b0e1c;color:#fff;border:1px solid #3a4288;padding:6px;border-radius:4px;"></label>
+      <button class="primary" onclick="startExam()">Start Exam</button>
+    </div>
+    <div id="exam-area"></div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// =================== UTILITIES ===================
+const rand = (a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const frac = (n,d)=>`\\tfrac{${n}}{${d}}`;
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a;}
+function simp(n,d){const g=gcd(n,d);return [n/g,d/g];}
+function normalizeAns(s){
+  if(s==null) return '';
+  return String(s).toLowerCase().replace(/\s+/g,'')
+    .replace(/\*/g,'').replace(/∞/g,'infinity').replace(/infty/g,'infinity')
+    .replace(/−/g,'-').replace(/–/g,'-');
+}
+function answersMatch(user, accepted){
+  const u = normalizeAns(user);
+  if(!u) return false;
+  return accepted.map(normalizeAns).some(a=>a===u);
+}
+function typeset(){ if(window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(); }
+
+// =================== STATE ===================
+const SECTIONS = ['overview','61','62','63','64','exam'];
+const LABELS = {overview:'Overview','61':'6.1 Exponential','62':'6.2 Transform / e','63':'6.3 Logarithms','64':'6.4 Log Graphs','exam':'Mixed Exam'};
+let stats = JSON.parse(localStorage.getItem('mat151stats')||'{}');
+function saveStats(){localStorage.setItem('mat151stats',JSON.stringify(stats));}
+function getS(sec){ if(!stats[sec])stats[sec]={correct:0,total:0,streak:0,best:0};return stats[sec];}
+function updStats(sec,ok){
+  const s=getS(sec); s.total++; if(ok){s.correct++;s.streak++; if(s.streak>s.best)s.best=s.streak;} else s.streak=0;
+  saveStats(); renderStats(sec); renderOverall();
+}
+function renderStats(sec){
+  const s=getS(sec);
+  const el=document.getElementById('stats-'+sec); if(!el)return;
+  const pct = s.total? Math.round(100*s.correct/s.total):0;
+  el.innerHTML = `<span>Attempts: <b>${s.total}</b></span><span>Correct: <b>${s.correct}</b></span><span>Accuracy: <b>${pct}%</b></span><span class="streak">🔥 Streak: ${s.streak} (best ${s.best})</span>`;
+  const bar=document.getElementById('mast-'+sec);
+  const mastery = Math.min(100, Math.round( (s.correct*100/Math.max(10,s.correct+5)) ));
+  bar.style.width = mastery+'%';
+}
+function renderOverall(){
+  const el=document.getElementById('overallStats'); if(!el)return;
+  let out='<table><tr><th>Section</th><th>Attempts</th><th>Correct</th><th>Accuracy</th><th>Best streak</th></tr>';
+  for(const k of ['61','62','63','64']){
+    const s=getS(k); const pct=s.total?Math.round(100*s.correct/s.total):0;
+    out+=`<tr><td>${LABELS[k]}</td><td>${s.total}</td><td>${s.correct}</td><td>${pct}%</td><td>${s.best}</td></tr>`;
+  }
+  out+='</table>';
+  el.innerHTML=out;
+}
+function resetAll(){ if(confirm('Reset all progress?')){stats={};saveStats();for(const k of ['61','62','63','64'])renderStats(k);renderOverall();}}
+
+// =================== NAV ===================
+const nav=document.getElementById('nav');
+SECTIONS.forEach(id=>{
+  const b=document.createElement('button');
+  b.textContent=LABELS[id];
+  b.onclick=()=>showSec(id);
+  b.id='nav-'+id;
+  nav.appendChild(b);
+});
+function showSec(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('nav-'+id).classList.add('active');
+  typeset();
+}
+
+// =================== TOPICS ===================
+const TOPICS = {
+  '61':[
+    {id:'eval', name:'Evaluate $b^x$'},
+    {id:'props', name:'Graph property ID'},
+    {id:'grow', name:'Growth vs decay'},
+    {id:'oneone',name:'Solve $b^a=b^c$'}
+  ],
+  '62':[
+    {id:'asym', name:'Asymptote after shift'},
+    {id:'range',name:'Range after shift/reflect'},
+    {id:'yint', name:'y-intercept'},
+    {id:'desc', name:'Describe transformation'},
+    {id:'ecomp',name:'Compare $e^x$ to $2^x,3^x$'}
+  ],
+  '63':[
+    {id:'e2l',  name:'Exponential → log'},
+    {id:'l2e',  name:'Log → exponential'},
+    {id:'eval', name:'Evaluate $\\log_b x$'},
+    {id:'solve',name:'Solve for unknown'},
+    {id:'cancel',name:'Cancellation identity'}
+  ],
+  '64':[
+    {id:'dom',  name:'Domain'},
+    {id:'asym', name:'Vertical asymptote'},
+    {id:'xint', name:'x-intercept'},
+    {id:'range',name:'Range'},
+    {id:'value',name:'Evaluate from chart'}
+  ]
+};
+const diffState = {'61':2,'62':2,'63':2,'64':2};
+const topicState = {};
+for(const k of Object.keys(TOPICS)){
+  topicState[k]=new Set(TOPICS[k].map(t=>t.id));
+  const host=document.getElementById('topics-'+k);
+  TOPICS[k].forEach(t=>{
+    const lab=document.createElement('label');
+    lab.innerHTML=`<input type="checkbox" checked data-sec="${k}" data-t="${t.id}"> ${t.name}`;
+    lab.querySelector('input').onchange=e=>{
+      if(e.target.checked) topicState[k].add(t.id); else topicState[k].delete(t.id);
+      if(topicState[k].size===0){topicState[k].add(t.id); e.target.checked=true;}
+    };
+    host.appendChild(lab);
+  });
+  const diffHost=document.querySelector(`.difficulty[data-for="${k}"]`);
+  ['Easy','Medium','Hard'].forEach((n,i)=>{
+    const b=document.createElement('button'); b.textContent=n;
+    if(i+1===diffState[k])b.classList.add('active');
+    b.onclick=()=>{diffState[k]=i+1; diffHost.querySelectorAll('button').forEach(x=>x.classList.remove('active')); b.classList.add('active'); newProb(k);};
+    diffHost.appendChild(b);
+  });
+}
+
+// =================== PROBLEM GENERATORS ===================
+// Each generator returns {q: latex question string, a: [accepted answers], s: solution latex}
+
+function gen61(diff){
+  const pool=[...topicState['61']];
+  const t=pick(pool);
+  if(t==='eval'){
+    // evaluate b^x where answer is clean
+    const b=pick([2,3,4,5,10,1/2,1/3]);
+    const x=diff===1?pick([0,1,2,-1]):diff===2?pick([-2,-1,0,1,2,3]):pick([-3,-2,-1,0,1,2,3,4]);
+    const bStr = b===0.5?'\\tfrac{1}{2}':b===1/3?'\\tfrac{1}{3}':String(b);
+    let val = Math.pow(b,x);
+    // keep nice fractions
+    let ansAccept=[];
+    if(Number.isInteger(val)){ansAccept.push(String(val));}
+    else{
+      // express as fraction
+      if(b===2 && x<0){ansAccept.push(`1/${Math.pow(2,-x)}`,`${Math.pow(2,-x)}^-1`);}
+      else if(b===3 && x<0){ansAccept.push(`1/${Math.pow(3,-x)}`);}
+      else if(b===0.5){ansAccept.push(`${Math.pow(2,x)}`,`1/${Math.pow(2,-x)}`);}
+      else if(b===1/3){ansAccept.push(`${Math.pow(3,x)}`,`1/${Math.pow(3,-x)}`);}
+      ansAccept.push(val.toFixed(4).replace(/0+$/,'').replace(/\.$/,''));
+    }
+    const phrases=[
+      `Evaluate $f(${x})$ for $f(x)=${bStr}^{x}$.`,
+      `What is $${bStr}^{${x}}$?`,
+      `Compute: $${bStr}^{${x}}$.`,
+      `Let $f(x)=${bStr}^{x}$. Find $f(${x})$.`
+    ];
+    return {q:pick(phrases), a:ansAccept, s:`$${bStr}^{${x}} = ${Number.isInteger(val)?val: val.toFixed(6)}$.`};
+  }
+  if(t==='grow'){
+    const b=pick([2,3,5,10,1.2,1.01,0.5,0.9,0.3,1/4,2/3]);
+    const bStr = b===0.5?'0.5':String(b);
+    const phr=[
+      `Does $y=${bStr}^x$ represent growth or decay?`,
+      `State whether $f(x)=${bStr}^x$ is increasing or decreasing.`,
+      `For $y=${bStr}^x$, is the base such that the graph grows or decays?`
+    ];
+    const gd = b>1?'growth':'decay';
+    const inc = b>1?'increasing':'decreasing';
+    return {q:pick(phr),a:[gd,inc,b>1?'grows':'decays',b>1?'increase':'decrease'],s:`Base $=${bStr}$ is ${b>1?'>1 → growth / increasing':'between 0 and 1 → decay / decreasing'}.`};
+  }
+  if(t==='oneone'){
+    const b=pick([2,3,5,7,10]);
+    const c=rand(-5,5);
+    const shift=rand(-3,3);
+    // b^(x+shift) = b^c  => x = c-shift
+    const phr=[
+      `Solve for $x$: $${b}^{x+${shift}} = ${b}^{${c}}$.`,
+      `If $${b}^{x+${shift}} = ${b}^{${c}}$, find $x$.`,
+      `Use the one-to-one property to solve: $${b}^{x+${shift}} = ${b}^{${c}}$.`
+    ];
+    return {q:pick(phr).replace(/\+-/g,'-').replace(/\+0/g,''),a:[String(c-shift)],s:`Bases equal ⇒ exponents equal: $x+${shift}=${c}$, so $x=${c-shift}$.`};
+  }
+  // props
+  const askFor = pick(['domain','range','asymptote','y-intercept','x-intercept']);
+  const b=pick([2,3,5,10,1/2,1/3]);
+  const bStr=b===0.5?'\\tfrac{1}{2}':b===1/3?'\\tfrac{1}{3}':String(b);
+  const phrases=[
+    `Give the ${askFor} of $f(x)=${bStr}^x$.`,
+    `State the ${askFor} for $y=${bStr}^x$.`,
+    `What is the ${askFor} of the graph of $y=${bStr}^x$?`
+  ];
+  const ansMap={
+    'domain':['(-infinity,infinity)','(-∞,∞)','all reals','r'],
+    'range':['(0,infinity)','(0,∞)'],
+    'asymptote':['y=0','0'],
+    'y-intercept':['(0,1)','1','0,1'],
+    'x-intercept':['none','dne','no x-intercept']
+  };
+  return {q:pick(phrases),a:ansMap[askFor],s:`For $y=b^x$: domain $(-\\infty,\\infty)$, range $(0,\\infty)$, asymptote $y=0$, y-intercept $(0,1)$, no x-intercept.`};
+}
+
+function gen62(diff){
+  const pool=[...topicState['62']];
+  const t=pick(pool);
+  const b=pick([2,3,5,10]);
+  const h=rand(-4,4); // horizontal shift inside exp
+  const k=rand(-4,4);
+  // Build y = b^(x+h) + k (randomly sometimes reflect)
+  const reflectY = Math.random()<0.3;
+  const reflectX = Math.random()<0.3;
+  let expr = `${reflectX?'-':''}${b}^{${reflectY?'-':''}x${h>=0?'+'+h:h}}${k>=0?'+'+k:k}`;
+  expr = expr.replace('+0','').replace('-0','');
+  // effective range / asymptote
+  const asym = `y=${k}`;
+  if(t==='asym'){
+    const phr=[
+      `Give the horizontal asymptote of $y=${expr}$.`,
+      `Find the asymptote for $y=${expr}$.`,
+      `State the equation of the horizontal asymptote: $y=${expr}$.`
+    ];
+    return {q:pick(phr),a:[asym,String(k)],s:`Vertical shift is $+${k}$, so asymptote is $y=${k}$.`};
+  }
+  if(t==='range'){
+    // range is (k,∞) if not x-reflected, else (-∞,k)
+    const ans = reflectX?`(-infinity,${k})`:`(${k},infinity)`;
+    const phr=[
+      `What is the range of $y=${expr}$?`,
+      `Give the range in interval notation: $y=${expr}$.`
+    ];
+    return {q:pick(phr),a:[ans,ans.replace('infinity','∞')],s:`Parent range is $(0,\\infty)$. ${reflectX?'Reflection across x-axis flips to $(-\\infty,0)$.':''} Shift by $${k}$ gives ${reflectX?`$(-\\infty,${k})$`:`$(${k},\\infty)$`}.`};
+  }
+  if(t==='yint'){
+    // plug x=0: ±(b^(±0+h)) + k = ±b^h + k
+    const inner = reflectY?(-0+h):(0+h);
+    let val = Math.pow(b,inner);
+    if(reflectX) val = -val;
+    val = val + k;
+    const phr=[
+      `Find the y-intercept of $y=${expr}$.`,
+      `Plug in $x=0$ and give the y-intercept as a point for $y=${expr}$.`
+    ];
+    return {q:pick(phr),a:[`(0,${val})`,String(val)],s:`Plug $x=0$: $${reflectX?'-':''}${b}^{${h}}${k>=0?'+'+k:k} = ${val}$, so y-intercept $=(0,${val})$.`};
+  }
+  if(t==='ecomp'){
+    const phr=[
+      `Which graph does $y=e^x$ more closely resemble: $y=3^x$ or $y=3^{-x}$?`,
+      `Because $e\\approx 2.72$, $y=e^x$ is closest in shape to which base? ($2^x$ or $3^x$?)`,
+      `True or false: $y=e^x$ decays.`
+    ];
+    const q=pick(phr);
+    if(q.includes('3^{-x}')) return {q,a:['3^x','y=3^x','3x'],s:`$e>1$ so $e^x$ grows, matching $3^x$ (not the decay $3^{-x}$).`};
+    if(q.includes('closest')) return {q,a:['3^x','3x','y=3^x'],s:`$2<e<3$ but closer to 3, so $e^x$ most resembles $3^x$.`};
+    return {q,a:['false','f'],s:`$e>1$ so $e^x$ grows, not decays.`};
+  }
+  // desc
+  const parts=[];
+  if(h>0) parts.push(`shift left ${h}`);
+  if(h<0) parts.push(`shift right ${-h}`);
+  if(reflectY) parts.push(`reflect over y-axis`);
+  if(reflectX) parts.push(`reflect over x-axis`);
+  if(k>0) parts.push(`shift up ${k}`);
+  if(k<0) parts.push(`shift down ${-k}`);
+  if(parts.length===0) parts.push('no change');
+  const phr=[
+    `Describe the transformations applied to $y=${b}^x$ to obtain $y=${expr}$. (List any of: left/right, up/down, reflections.)`,
+    `In words, what transformations take $y=${b}^x$ to $y=${expr}$?`
+  ];
+  return {q:pick(phr),a:[parts.join(',').toLowerCase().replace(/\s/g,''),parts.join(', ').toLowerCase().replace(/\s/g,'')],s:`Transformations: ${parts.join('; ')}.`};
+}
+
+function gen63(diff){
+  const pool=[...topicState['63']];
+  const t=pick(pool);
+  if(t==='e2l'){
+    const b=pick([2,3,4,5,6,7,10,'e']);
+    const y=rand(-3,4);
+    const x = (b==='e')?`e^{${y}}`:Math.pow(b,y);
+    const ans = b===10?`log(${x})=${y}`:(b==='e'?`ln(${x})=${y}`:`log_${b}(${x})=${y}`);
+    const ansAlts=[ans,ans.replace(/\s/g,''),`${y}`,(b==='e'?`ln${x}=${y}`:`log_${b}${x}=${y}`)];
+    const disp = (b==='e')?`e^{${y}}=${x}`:`${b}^{${y}}=${x}`;
+    const phr=[
+      `Rewrite in logarithmic form: $${disp}$.`,
+      `Convert $${disp}$ to a logarithm.`,
+      `Express as a log equation: $${disp}$.`
+    ];
+    const latexAns = b===10?`\\log ${x}=${y}`:(b==='e'?`\\ln ${x}=${y}`:`\\log_{${b}} ${x}=${y}`);
+    return {q:pick(phr),a:ansAlts,s:`$${latexAns}$`};
+  }
+  if(t==='l2e'){
+    const b=pick([2,3,4,5,7,10,'e']);
+    const y=rand(-3,4);
+    const x=(b==='e')?`e^{${y}}`:Math.pow(b,y);
+    const logForm=(b===10?`\\log ${x}=${y}`:(b==='e'?`\\ln ${x}=${y}`:`\\log_{${b}} ${x}=${y}`));
+    const ans=(b==='e')?`e^${y}=${x}`:`${b}^${y}=${x}`;
+    const phr=[
+      `Rewrite in exponential form: $${logForm}$.`,
+      `Convert $${logForm}$ to exponential form.`,
+      `Express as an exponential equation: $${logForm}$.`
+    ];
+    return {q:pick(phr),a:[ans,ans.replace(/\s/g,'')],s:`$${b==='e'?'e':b}^{${y}}=${x}$`};
+  }
+  if(t==='eval'){
+    const b=pick([2,3,4,5,10,'e']);
+    const y=rand(-3,4);
+    let arg;
+    if(b==='e'){arg=`e^{${y}}`;}
+    else arg=Math.pow(b,y);
+    const phr=[
+      `Evaluate: $${b===10?'\\log':(b==='e'?'\\ln':'\\log_{'+b+'}')} ${arg}$.`,
+      `Find: $${b===10?'\\log':(b==='e'?'\\ln':'\\log_{'+b+'}')} ${arg} = ?$`
+    ];
+    return {q:pick(phr),a:[String(y)],s:`$\\log_b b^x = x$, so answer is $${y}$.`};
+  }
+  if(t==='solve'){
+    // log_x 64 = 2 form OR log_2 (1/8) = x form OR log_b m = -k form
+    const variant = rand(1,4);
+    if(variant===1){
+      const x=pick([2,3,4,5,6,7,10]);
+      const y=rand(2,4);
+      const val=Math.pow(x,y);
+      const phr=[
+        `Solve for $x$: $\\log_x ${val}=${y}$.`,
+        `Find $x$ if $\\log_x ${val}=${y}$.`
+      ];
+      return {q:pick(phr),a:[String(x)],s:`Convert: $x^{${y}}=${val}$. So $x=\\sqrt[${y}]{${val}}=${x}$.`};
+    }
+    if(variant===2){
+      const b=pick([2,3,4,5]);
+      const y=rand(-3,-1);
+      const val=Math.pow(b,y); // fraction
+      const latex = `\\tfrac{1}{${Math.pow(b,-y)}}`;
+      const phr=[
+        `Solve for $x$: $\\log_${b} ${latex} = x$.`,
+        `Find $x$: $\\log_${b} \\tfrac{1}{${Math.pow(b,-y)}} = x$.`
+      ];
+      return {q:pick(phr),a:[String(y)],s:`$${b}^x = \\tfrac{1}{${Math.pow(b,-y)}} = ${b}^{${y}}$, so $x=${y}$.`};
+    }
+    if(variant===3){
+      const b=pick([2,3,5,10]);
+      const y=rand(-3,3);
+      const m=Math.pow(b,y);
+      const phr=[
+        `Solve: $\\log_${b} m = ${y}$ for $m$.`,
+        `Find $m$ if $\\log_${b} m = ${y}$.`
+      ];
+      let ansVals=[String(m)];
+      if(!Number.isInteger(m)) ansVals.push(`1/${Math.pow(b,-y)}`);
+      return {q:pick(phr),a:ansVals,s:`Convert: $m=${b}^{${y}}=${Number.isInteger(m)?m:`\\tfrac{1}{${Math.pow(b,-y)}}`}$.`};
+    }
+    // log_a a^k = x
+    const k=rand(-4,4);
+    const phr=[`Simplify: $\\log_a a^{${k}}=x$. Find $x$.`, `Find $x$: $\\log_a a^{${k}}=x$.`];
+    return {q:pick(phr),a:[String(k)],s:`By $\\log_b b^x=x$, $x=${k}$.`};
+  }
+  // cancel
+  const v=rand(1,4);
+  if(v===1){
+    const k=rand(2,5);
+    return {q:`Simplify: $e^{\\ln ${k}}$.`,a:[String(k)],s:`$b^{\\log_b x}=x$, so $e^{\\ln ${k}}=${k}$.`};
+  }
+  if(v===2){
+    const k=rand(2,5);
+    return {q:`Simplify: $\\log 10^{${k}}$.`,a:[String(k)],s:`$\\log 10^x=x$ ⇒ $${k}$.`};
+  }
+  if(v===3){
+    const k=rand(2,5);
+    return {q:`Simplify: $\\ln e^{${k}}$.`,a:[String(k)],s:`$\\ln e^x=x$ ⇒ $${k}$.`};
+  }
+  const k=rand(2,6);
+  return {q:`Simplify: $10^{\\log ${k}}$.`,a:[String(k)],s:`$10^{\\log x}=x$ ⇒ $${k}$.`};
+}
+
+function gen64(diff){
+  const pool=[...topicState['64']];
+  const t=pick(pool);
+  // Build argument: ±x ± c  (and an outer +d for vertical shift variants)
+  const b=pick([2,3,4,5,10]);
+  const sign=pick([1,-1]);
+  const c=rand(-6,6);
+  const d=(diff===3)?rand(-3,3):0;
+  // argument is  sign*x + c  >0   => sign*x > -c => if sign=1: x > -c; if sign=-1: x < c
+  let argLatex = (sign===1?'x':'-x') + (c>=0?'+'+c:c);
+  argLatex = argLatex.replace('+0','').replace('-0','');
+  const expr = `\\log_${b}(${argLatex})${d>0?'+'+d:(d<0?d:'')}`;
+  if(t==='dom'){
+    const ans = sign===1?`(${-c},infinity)`:`(-infinity,${c})`;
+    const ansAlt = ans.replace('infinity','∞');
+    const phr=[
+      `Give the domain of $y=${expr}$ in interval notation.`,
+      `Find the domain: $y=${expr}$.`,
+      `For what $x$ is $y=${expr}$ defined? (Interval notation.)`
+    ];
+    return {q:pick(phr),a:[ans,ansAlt],s:`Set argument $>0$: $${argLatex}>0$. Solve: ${sign===1?`$x>${-c}$`:`$x<${c}$`} → ${ans.replace('infinity','\\infty')}.`};
+  }
+  if(t==='asym'){
+    const xv = sign===1? -c : c;
+    const phr=[
+      `Give the equation of the vertical asymptote: $y=${expr}$.`,
+      `Find the vertical asymptote of $y=${expr}$.`
+    ];
+    return {q:pick(phr),a:[`x=${xv}`,String(xv)],s:`Set argument $=0$: $${argLatex}=0 \\Rightarrow x=${xv}$. Asymptote: $x=${xv}$.`};
+  }
+  if(t==='xint'){
+    // x-intercept: y=0 => argument = b^{-d}. If d=0, argument=1.
+    // sign*x + c = b^{-d}  =>  x = (b^{-d} - c)/sign
+    const need = Math.pow(b,-d);
+    const xv = (need - c)/sign;
+    const phr=[
+      `Find the x-intercept of $y=${expr}$.`,
+      `Give the x-intercept as an ordered pair: $y=${expr}$.`
+    ];
+    return {q:pick(phr),a:[`(${xv},0)`,String(xv)],s:`Set $y=0$: $\\log_${b}(${argLatex})=${-d}$, so argument $=${b}^{${-d}}=${need}$. Solve: $${argLatex}=${need}$ ⇒ $x=${xv}$.`};
+  }
+  if(t==='range'){
+    const phr=[
+      `Give the range of $y=${expr}$.`,
+      `What is the range of $y=${expr}$?`
+    ];
+    return {q:pick(phr),a:['(-infinity,infinity)','(-∞,∞)','all reals','r'],s:`All log graphs have range $(-\\infty,\\infty)$.`};
+  }
+  // value: pick x so argument is b^n
+  const n=rand(-2,3);
+  const arg=Math.pow(b,n);
+  const xv=(arg-c)/sign;
+  const phr=[
+    `For $y=\\log_${b}(${argLatex})$, find $y$ when $x=${xv}$.`,
+    `Evaluate $y=\\log_${b}(${argLatex})$ at $x=${xv}$.`
+  ];
+  return {q:pick(phr),a:[String(n)],s:`Argument becomes $${arg}=${b}^{${n}}$, so $y=${n}$.`};
+}
+
+const GEN={'61':gen61,'62':gen62,'63':gen63,'64':gen64};
+
+// =================== FLOW ===================
+const current={};
+function newProb(sec){
+  current[sec]=GEN[sec](diffState[sec]);
+  document.getElementById('prob-'+sec).innerHTML = current[sec].q;
+  document.getElementById('ans-'+sec).value='';
+  document.getElementById('fb-'+sec).innerHTML='';
+  document.getElementById('sol-'+sec).innerHTML='';
+  typeset();
+}
+function checkAns(sec){
+  const p=current[sec]; if(!p)return;
+  const v=document.getElementById('ans-'+sec).value;
+  const ok=answersMatch(v,p.a);
+  const fb=document.getElementById('fb-'+sec);
+  fb.className='answer-box '+(ok?'good':'bad');
+  fb.innerHTML = ok? `✓ Correct! <span class="flash correct">+1</span>` : `✗ Not quite. Accepted answers include: <code>${p.a[0]}</code>`;
+  updStats(sec,ok);
+  typeset();
+}
+function showSol(sec){
+  const p=current[sec]; if(!p)return;
+  document.getElementById('sol-'+sec).innerHTML = `<div class="solution"><b>Solution:</b><br>${p.s}</div>`;
+  typeset();
+}
+
+// =================== EXAM MODE ===================
+let examState=null;
+function startExam(){
+  const n=Math.max(5,Math.min(50,parseInt(document.getElementById('exam-len').value)||15));
+  const items=[];
+  for(let i=0;i<n;i++){
+    const sec=pick(['61','62','63','64']);
+    items.push({sec, p:GEN[sec](2), ans:null, ok:null});
+  }
+  examState={items,idx:0};
+  renderExam();
+}
+function renderExam(){
+  const host=document.getElementById('exam-area');
+  if(!examState){host.innerHTML='';return;}
+  let html='';
+  examState.items.forEach((it,i)=>{
+    html+=`<div class="problem"><b>Q${i+1} (${LABELS[it.sec]}):</b> ${it.p.q}
+      <div class="controls">
+        <input type="text" id="exa-${i}" value="${it.ans||''}" placeholder="Your answer…" ${it.ok!==null?'disabled':''}>
+        <button class="primary" onclick="gradeOne(${i})" ${it.ok!==null?'disabled':''}>Check</button>
+        <button class="ghost" onclick="revealOne(${i})">Solution</button>
+        ${it.ok===true?'<span class="flash correct">✓</span>':it.ok===false?'<span class="flash wrong">✗</span>':''}
+      </div>
+      <div id="exs-${i}"></div>
+    </div>`;
+  });
+  const correct=examState.items.filter(x=>x.ok===true).length;
+  const answered=examState.items.filter(x=>x.ok!==null).length;
+  html+=`<div class="card" style="margin-top:16px;"><b>Score:</b> ${correct}/${examState.items.length} &nbsp; Answered: ${answered}/${examState.items.length}</div>`;
+  host.innerHTML=html;
+  typeset();
+}
+function gradeOne(i){
+  const it=examState.items[i];
+  const v=document.getElementById('exa-'+i).value;
+  it.ans=v; it.ok=answersMatch(v,it.p.a);
+  updStats(it.sec,it.ok);
+  renderExam();
+}
+function revealOne(i){
+  const it=examState.items[i];
+  document.getElementById('exs-'+i).innerHTML=`<div class="solution"><b>Solution:</b><br>${it.p.s}<br><b>Accepted:</b> <code>${it.p.a[0]}</code></div>`;
+  typeset();
+}
+
+// =================== INIT ===================
+for(const k of ['61','62','63','64']){ newProb(k); renderStats(k); }
+renderOverall();
+showSec('overview');
+</script>
+</body>
+</html>
