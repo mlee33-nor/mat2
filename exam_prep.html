@@ -274,6 +274,15 @@
       <li>$-b^x$ reflect over x-axis. $b^{-x}$ reflect over y-axis.</li>
       <li>$e\approx 2.718$; $e^x$ grows (between $2^x$ and $3^x$).</li>
     </ul>
+    <h3>⚠ Sign traps</h3>
+    <ul>
+      <li>$b^{-x+1}=b^{-(x-1)}$ → reflect y-axis <b>then shift right 1</b> (not left).</li>
+      <li>$b^{1-x}=b^{-(x-1)}$ — same as above.</li>
+      <li>$b^{-x-2}=b^{-(x+2)}$ → reflect y-axis, shift left 2.</li>
+      <li>$5-2e^{x+1}$ → reflect x-axis, stretch ×2, left 1, up 5. Asymptote $y=5$, range $(-\infty,5)$.</li>
+      <li>$a-b^x$ = $-b^x+a$: reflect x-axis, asymptote $y=a$, range $(-\infty,a)$.</li>
+      <li><b>Rule:</b> factor the coefficient of $x$ out of the exponent <i>before</i> reading the shift. The sign of the shift flips when $m<0$.</li>
+    </ul>
     <h3>Logs · 6.3</h3>
     <div class="def">$x=b^y \;\Longleftrightarrow\; y=\log_b x$</div>
     <ul>
@@ -343,7 +352,19 @@ const LESSONS={
 '62':`<p>Translations &amp; reflections of $y=b^x$:</p>
 <ul><li>$b^{x+c}$ shift left $c$ · $b^{x-c}$ shift right $c$.</li><li>$b^x+k$ shift up $k$ — <b>new asymptote $y=k$</b>.</li><li>$-b^x$ reflect over x-axis · $b^{-x}$ reflect over y-axis.</li></ul>
 <p>$e\\approx 2.718$ sits between 2 and 3, so $y=e^x$ grows like $y=3^x$.</p>
-<div class="note"><b>Packet Example 2:</b> Sketch $y=3^{x+1}+1$ — shift $y=3^x$ left 1, up 1. Asymptote $y=1$. y-intercept $(0,4)$. Range $(1,\\infty)$.</div>`,
+<div class="note"><b>Packet Example 2:</b> Sketch $y=3^{x+1}+1$ — shift $y=3^x$ left 1, up 1. Asymptote $y=1$. y-intercept $(0,4)$. Range $(1,\\infty)$.</div>
+<h3>⚠ Watch out — tricky sign manipulations</h3>
+<p>These trip people up constantly. <b>Always factor out the coefficient of $x$ from the exponent before reading off the shift.</b></p>
+<ul>
+  <li>$b^{-x+1}$ is <b>not</b> "left 1". Factor: $b^{-x+1}=b^{-(x-1)}$ → reflect over y-axis <b>then shift right 1</b>. The sign of the shift <i>flips</i> when you pull out $-1$.</li>
+  <li>$b^{1-x}=b^{-(x-1)}$ — same thing: reflect y-axis, shift right 1.</li>
+  <li>$b^{-x-2}=b^{-(x+2)}$ → reflect y-axis, shift <b>left 2</b>.</li>
+  <li>$5-2e^{x+1}$ = $-2e^{x+1}+5$ → reflect x-axis, vertical stretch by 2, shift left 1, shift up 5. The "5" moves the asymptote to $y=5$, and the "$-$" makes the range $(-\\infty,5)$ instead of $(5,\\infty)$.</li>
+  <li>$3-b^x=-b^x+3$ → reflect x-axis, shift up 3. Asymptote is $y=3$; range $(-\\infty,3)$.</li>
+  <li>Constants <b>multiplying</b> the exponential (like the $-2$ in $-2e^{x+1}$) reflect and stretch vertically, but do <b>not</b> change the asymptote location — only the vertical shift does that.</li>
+</ul>
+<div class="note"><b>Recipe for any $y=a\\cdot b^{mx+c}+k$:</b>
+<ol><li>Factor the exponent: $mx+c=m(x+c/m)$. That $c/m$ is the horizontal shift (flip sign if $m<0$).</li><li>$m<0$ → reflect over y-axis.</li><li>$a<0$ → reflect over x-axis.</li><li>$|a|\\ne 1$ → vertical stretch/compress by $|a|$.</li><li>$k$ is the vertical shift → <b>asymptote $y=k$</b>, range flipped if $a<0$.</li></ol></div>`,
 '63':`<div class="def">$x=b^y \\;\\Longleftrightarrow\\; y=\\log_b x$</div>
 <p>A logarithm IS an exponent. Special cases: $\\log x=\\log_{10}x$ and $\\ln x=\\log_e x$.</p>
 <p><b>Cancellation:</b> $\\log_b b^x=x$ and $b^{\\log_b x}=x$. Examples: $\\log 10^3=3$, $\\ln e^2=2$, $e^{\\ln 4}=4$.</p>
