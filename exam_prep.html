@@ -10,34 +10,38 @@
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
   :root{
-    --bg:#0b0d14;--panel:#141722;--panel-2:#1a1e2c;--border:#232838;--border-hi:#323a52;
-    --text:#e8ecf5;--muted:#8b93a8;--dim:#5a6178;--accent:#7aa2ff;--accent-soft:rgba(122,162,255,.14);
+    --bg:#0a0c12;--panel:#12151f;--panel-2:#181c28;--border:#212636;--border-hi:#2e3550;
+    --text:#eaedf5;--muted:#8c94a8;--dim:#555c73;--accent:#88a5ff;--accent-soft:rgba(136,165,255,.12);
     --good:#4ade80;--bad:#f87171;--warn:#fbbf24;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
-  .app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
-  aside{background:var(--panel);border-right:1px solid var(--border);padding:16px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
-  .logo{padding:6px 10px 14px;border-bottom:1px solid var(--border);margin-bottom:10px}
-  .logo-title{font-weight:600;font-size:14px}
-  .logo-sub{font-size:11px;color:var(--muted);margin-top:2px}
-  .nav-group{font-size:10px;text-transform:uppercase;color:var(--dim);padding:12px 10px 4px;letter-spacing:.08em;font-weight:600}
-  .nav-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;color:var(--muted);border:0;padding:7px 10px;border-radius:6px;cursor:pointer;font:inherit;font-size:13px}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+  .app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+  aside{background:var(--panel);border-right:1px solid var(--border);padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+  .logo{display:flex;align-items:center;gap:10px;padding:2px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:14px}
+  .logo-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#88a5ff,#a78bfa);display:grid;place-items:center;font-weight:700;color:#0a0c12;font-size:14px;font-family:'JetBrains Mono';letter-spacing:-.02em;flex-shrink:0}
+  .logo-text{min-width:0}
+  .logo-title{font-weight:600;font-size:13.5px;letter-spacing:-.01em;line-height:1.25}
+  .logo-sub{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:.01em}
+  .nav-group{font-size:10px;text-transform:uppercase;color:var(--dim);padding:14px 10px 6px;letter-spacing:.1em;font-weight:600}
+  .nav-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;color:var(--muted);border:0;padding:7px 10px;border-radius:6px;cursor:pointer;font:inherit;font-size:13px;transition:.12s}
   .nav-btn:hover{background:var(--panel-2);color:var(--text)}
   .nav-btn.active{background:var(--accent-soft);color:var(--text)}
-  .nav-btn .num{font-family:'JetBrains Mono';font-size:11px;color:var(--dim);width:28px}
+  .nav-btn .num{font-family:'JetBrains Mono';font-size:11px;color:var(--dim);width:30px}
   .nav-btn.active .num{color:var(--accent)}
-  main{padding:24px 32px 60px;max-width:1180px;width:100%;margin:0 auto}
-  @media(max-width:900px){.app{grid-template-columns:1fr}aside{position:relative;height:auto}main{padding:16px}}
-  h1{font-size:20px;font-weight:600;margin:0 0 4px}
-  .page-sub{color:var(--muted);font-size:13px;margin:0 0 20px}
+  main{padding:36px 44px 80px;max-width:1200px;width:100%;margin:0 auto}
+  @media(max-width:900px){.app{grid-template-columns:1fr}aside{position:relative;height:auto}main{padding:24px 20px}}
+  .page-head{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+  .page-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:600;margin-bottom:8px}
+  h1{font-size:26px;font-weight:600;margin:0 0 6px;letter-spacing:-.02em}
+  .page-sub{color:var(--muted);font-size:14px;margin:0;max-width:720px;line-height:1.6}
   .section{display:none}.section.active{display:block}
 
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
-  .card h2{margin:0 0 4px;font-size:16px;font-weight:600}
-  .card .meta{color:var(--muted);font-size:13px;margin:0 0 14px}
-  .card h3{margin:18px 0 8px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:24px 26px;margin-bottom:18px}
+  .card h2{margin:0 0 6px;font-size:15px;font-weight:600;letter-spacing:-.005em}
+  .card .meta{color:var(--muted);font-size:13px;margin:0 0 18px;line-height:1.6}
+  .card h3{margin:20px 0 10px;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
 
   .btn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:500;font-size:13px;padding:8px 14px;border-radius:6px;border:1px solid var(--border);cursor:pointer;background:var(--panel-2);color:var(--text);transition:.12s}
   .btn:hover{background:var(--border);border-color:var(--border-hi)}
@@ -165,8 +169,11 @@
 
 <aside>
   <div class="logo">
-    <div class="logo-title">MAT151 · Ch 6 Study Tool</div>
-    <div class="logo-sub">Exponential &amp; Logarithmic Functions</div>
+    <div class="logo-mark">λ</div>
+    <div class="logo-text">
+      <div class="logo-title">Ch 6 Study Tool</div>
+      <div class="logo-sub">MAT151 · College Algebra</div>
+    </div>
   </div>
   <div class="nav-group">Lessons</div>
   <button class="nav-btn" data-go="overview"><span class="num">—</span>Dashboard</button>
@@ -183,8 +190,11 @@
 
 <!-- DASHBOARD -->
 <section class="section" id="sec-overview">
-  <h1>Dashboard</h1>
-  <p class="page-sub">Progress saved in your browser. Each lesson is structured like the study guide — read the notes, work the examples.</p>
+  <div class="page-head">
+    <div class="page-eyebrow">Exponential &amp; Logarithmic Functions</div>
+    <h1>Chapter 6 · Study Tool</h1>
+    <p class="page-sub">An interactive companion to the MAT151 Ch 6.1–6.4 packet. Problems mirror each example format: fill the table, plot the points, identify the features. Progress saves in your browser.</p>
+  </div>
   <div class="stats-row" id="statsGrid"></div>
 
   <div class="card">
@@ -203,8 +213,8 @@
     <div class="lesson">
       <ul>
         <li><b>Points snap to a grid</b> — click near where you want and it'll lock onto the nearest half-unit.</li>
-        <li>After filling the table, the graph highlights the correct spots as hollow rings so you can see where to click.</li>
-        <li>Click <b>Show correct curve</b> to overlay the true graph as a dashed green line.</li>
+        <li>Plot based on your table values — the graph won't give you hints.</li>
+        <li>Click <b>Show correct curve</b> when you're done to overlay the true graph as a dashed green line and check your work.</li>
         <li>Keyboard: <span class="kbd">U</span> undo · <span class="kbd">C</span> clear · <span class="kbd">R</span> reveal.</li>
       </ul>
     </div>
@@ -226,8 +236,11 @@
 
 <!-- EXAM -->
 <section class="section" id="sec-exam">
-  <h1>Mixed Drill</h1>
-  <p class="page-sub">Quick-fire short-answer problems pulled from all four sections (one answer per question). Use this after you've worked through each lesson.</p>
+  <div class="page-head">
+    <div class="page-eyebrow">Practice</div>
+    <h1>Mixed Drill</h1>
+    <p class="page-sub">Quick-fire short-answer problems pulled from all four sections. Good warm-up or final check before the test.</p>
+  </div>
   <div class="card">
     <div class="controls-row">
       <span class="label">How many problems?</span>
@@ -241,7 +254,11 @@
 
 <!-- CHEATSHEET -->
 <section class="section" id="sec-cheatsheet">
-  <h1>Cheat Sheet</h1>
+  <div class="page-head">
+    <div class="page-eyebrow">Reference</div>
+    <h1>Cheat Sheet</h1>
+    <p class="page-sub">Everything from 6.1–6.4 on one page. Print-friendly.</p>
+  </div>
   <div class="card lesson">
     <h3>Exponential $f(x)=b^x$ · 6.1</h3>
     <ul>
@@ -339,12 +356,22 @@ const LESSONS={
 /* ========== PROBLEM TYPES PER SECTION ========== */
 const PROBLEM_TYPES={
   '61':[
-    {id:'table',name:'Table + Graph (Ex 1, 3)',desc:'Fill in the x/y table for $y=b^x$, plot the points, identify features.'},
-    {id:'quick',name:'Quick evaluate',desc:'One-shot evaluation of $b^x$ or growth/decay.'}
+    {id:'table',name:'Table + Graph (Ex 1, 3)',desc:'Fill the x/y table for $y=b^x$, plot, identify features.'},
+    {id:'compare',name:'Compare two graphs (Ex 1)',desc:'Like Ex 1a/1b: two functions on one set of axes.'},
+    {id:'identify',name:'Identify base from table',desc:'Given a table of values, figure out the function.'},
+    {id:'rational',name:'Rational-exponent eval',desc:'Evaluate $b^{p/q}$.'},
+    {id:'applied',name:'Growth / decay word problem',desc:'Population / value problems using $b^x$.'},
+    {id:'reverse',name:'Reverse (solve for x)',desc:'Given $y$ and $b$, find $x$.'},
+    {id:'quick',name:'Quick evaluate',desc:'One-shot evaluation or growth/decay.'}
   ],
   '62':[
-    {id:'transform',name:'Transformation sketch (Ex 2)',desc:'Given a transformed exponential, fill the table, plot, and identify the new asymptote, range, intercepts.'},
-    {id:'quick',name:'Quick transformation feature',desc:'Find one feature (asymptote, range, y-int) after a shift.'}
+    {id:'transform',name:'Transformation sketch (Ex 2)',desc:'Fill table, plot, identify new asymptote / range / intercepts.'},
+    {id:'e_graph',name:'Graph $y=e^x$ (Ex 3)',desc:'Table + plot for the natural base $e$.'},
+    {id:'e_transform',name:'Transform $e^x$ (key points)',desc:'Like $g(x)=5-2e^{x+1}$: apply transforms to key points of $e^x$, then plot.'},
+    {id:'describe',name:'Describe transformation',desc:'List shifts / reflections from parent to target.'},
+    {id:'match',name:'Match features → function',desc:'Given asymptote / shift info, pick the correct equation.'},
+    {id:'reflect',name:'Reflection only',desc:'$-b^x$ vs $b^{-x}$ — identify what flipped.'},
+    {id:'quick',name:'Quick feature',desc:'Find one feature (asymptote, range, y-int) after a shift.'}
   ],
   '63':[
     {id:'conv',name:'Exp ↔ log chart (Ex 4)',desc:'Fill the missing side of a conversion chart.'},
@@ -376,7 +403,7 @@ function MiniPlot(opts){
     <button class="btn btn-sm btn-primary" data-a="reveal">Show correct curve</button>`;
   host.appendChild(ctrl);
   const stat=document.createElement('div');stat.className='plot-status';host.appendChild(stat);
-  const legend=document.createElement('div');legend.className='legend';legend.innerHTML=`<span><span class="sw" style="background:var(--accent)"></span>Your sketch</span><span><span class="sw" style="background:#4ade80;background-image:repeating-linear-gradient(90deg,#4ade80 0 4px,transparent 4px 8px)"></span>Correct curve</span><span><span class="sw" style="background:transparent;border:1px dashed #4ade80;border-radius:50%;width:8px;height:8px"></span>Target points</span>`;host.appendChild(legend);
+  const legend=document.createElement('div');legend.className='legend';legend.innerHTML=`<span><span class="sw" style="background:var(--accent)"></span>Your sketch</span><span><span class="sw" style="background:#4ade80;background-image:repeating-linear-gradient(90deg,#4ade80 0 4px,transparent 4px 8px)"></span>Correct curve (click "Show correct curve" to reveal)</span>`;host.appendChild(legend);
 
   ctrl.querySelectorAll('button').forEach(b=>b.onclick=()=>{const a=b.dataset.a;if(a==='undo')points.pop();if(a==='clear'){points=[];showTruth=false;}if(a==='reveal')showTruth=!showTruth;render();});
 
@@ -408,7 +435,7 @@ function MiniPlot(opts){
     const svg=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
       ${axes()}
       ${showTruth?`<path d="${truthPath()}" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-dasharray="4 4" opacity="0.9"/>`:''}
-      ${showTargets.map(t=>{const y=f(t);if(!isFinite(y)||y<ymin-5||y>ymax+5)return '';return `<circle cx="${xP(t)}" cy="${yP(y)}" r="6" fill="none" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.8"/>`;}).join('')}
+      ${/* target point markers hidden so they don't give away the answer */''}
       <path d="${userPath}" fill="none" stroke="#7aa2ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       ${points.map(p=>`<circle cx="${xP(p.x)}" cy="${yP(p.y)}" r="4.5" fill="#7aa2ff" stroke="#fff" stroke-width="1.3"/>`).join('')}
     </svg>`;
@@ -528,6 +555,347 @@ function build_61_quick(){
     render(root){root.innerHTML=`<div class="problem-q">${q}</div><div class="problem-inst">Type just the answer below.</div><div class="controls-row"><input type="text" id="qa-${this._id}" placeholder="${placeholder}" style="min-width:220px"><button class="btn btn-primary" onclick="document.getElementById('p-check-${this._id}').click()">Check</button></div>`;this._root=root;this._a=a;this._s=s;},
     check(){const v=this._root.querySelector('#qa-'+this._id).value;const ok=match(v,this._a);return {ok,msg:ok?'Correct.':'Not quite. Accepted: '+this._a[0]};},
     showSolution(){this._root.querySelector('#qa-'+this._id).value=this._a[0];}
+  };
+}
+
+/* ---- 6.1 COMPARE TWO GRAPHS (Ex 1) ---- */
+function build_61_compare(){
+  const mode=pick(['growth','decay']);
+  const [b1,b2]=mode==='growth'?pick([[3,2],[4,2],[5,3]]):pick([[1/2,1/3],[1/3,1/4]]);
+  const b1s=b1===1/2?'\\tfrac{1}{2}':b1===1/3?'\\tfrac{1}{3}':b1===1/4?'\\tfrac{1}{4}':String(b1);
+  const b2s=b2===1/2?'\\tfrac{1}{2}':b2===1/3?'\\tfrac{1}{3}':b2===1/4?'\\tfrac{1}{4}':String(b2);
+  const xs=mode==='growth'?[-2,-1,0,1,2]:[-2,-1,0,1,2];
+  const y1=xs.map(x=>Math.pow(b1,x));
+  const y2=xs.map(x=>Math.pow(b2,x));
+  return {
+    topic:'Compare two graphs (Ex 1)',
+    render(root){
+      root.innerHTML=`
+      <div class="problem-q">Graph $y_1=${b1s}^x$ and $y_2=${b2s}^x$ on the same axes.</div>
+      <div class="problem-inst">(a) Fill both tables. (b) Plot points for <b>both</b> functions on the grid (click once per value). (c) Answer the comparison question.</div>
+      <div class="grid-2col">
+        <div>
+          <h3>$y_1=${b1s}^x$</h3>
+          <table class="xy"><tr><th>x</th>${xs.map(x=>`<td class="xv">${x}</td>`).join('')}</tr>
+          <tr><th>$y_1$</th>${xs.map((_,i)=>`<td><input class="cell" data-i="1-${i}" type="text"></td>`).join('')}</tr></table>
+          <h3>$y_2=${b2s}^x$</h3>
+          <table class="xy"><tr><th>x</th>${xs.map(x=>`<td class="xv">${x}</td>`).join('')}</tr>
+          <tr><th>$y_2$</th>${xs.map((_,i)=>`<td><input class="cell" data-i="2-${i}" type="text"></td>`).join('')}</tr></table>
+          <h3>Comparison</h3>
+          <div class="features">
+            <label>Which is steeper for $x>0$?</label>
+            <input class="feat" data-f="steep" placeholder="y_1 or y_2">
+          </div>
+        </div>
+        <div>
+          <h3>Graph</h3>
+          <div id="plot-host-${this._id}"></div>
+        </div>
+      </div>`;
+      this._root=root;
+      const ymax=Math.ceil(Math.max(...y1,...y2,10));
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:x=>Math.pow(b1,x),xmin:-3,xmax:3,ymin:-1,ymax:Math.min(ymax,16),snapX:1,snapY:0.5,showTargets:xs.filter(x=>Math.pow(b1,x)<=12),tolY:0.5});
+    },
+    check(){
+      const root=this._root;let okCells=0;
+      xs.forEach((x,i)=>{const i1=root.querySelector(`input.cell[data-i="1-${i}"]`);const i2=root.querySelector(`input.cell[data-i="2-${i}"]`);const ok1=fracEq(i1.value,y1[i]);const ok2=fracEq(i2.value,y2[i]);i1.classList.toggle('good',ok1);i1.classList.toggle('bad',!ok1&&i1.value!=='');i2.classList.toggle('good',ok2);i2.classList.toggle('bad',!ok2&&i2.value!=='');if(ok1)okCells++;if(ok2)okCells++;});
+      const steeper=mode==='growth'?(b1>b2?'y_1':'y_2'):(b1<b2?'y_2':'y_1');
+      const si=root.querySelector('[data-f="steep"]');const okSteep=match(si.value,[steeper,steeper.replace('_','')]);si.classList.toggle('good',okSteep);si.classList.toggle('bad',!okSteep&&si.value!=='');
+      const total=xs.length*2+1;const got=okCells+(okSteep?1:0);
+      return {ok:got===total,msg:`Tables: ${okCells}/${xs.length*2} · Comparison: ${okSteep?'✓':'✗'}`};
+    },
+    showSolution(){
+      const root=this._root;xs.forEach((x,i)=>{root.querySelector(`input.cell[data-i="1-${i}"]`).value=Number.isInteger(y1[i])?y1[i]:`1/${Math.round(1/y1[i])}`;root.querySelector(`input.cell[data-i="2-${i}"]`).value=Number.isInteger(y2[i])?y2[i]:`1/${Math.round(1/y2[i])}`;});
+      const steeper=mode==='growth'?(b1>b2?'y_1':'y_2'):(b1<b2?'y_2':'y_1');
+      root.querySelector('[data-f="steep"]').value=steeper;
+    }
+  };
+}
+
+/* ---- 6.1 IDENTIFY BASE FROM TABLE ---- */
+function build_61_identify(){
+  const b=pick([2,3,4,5,10,1/2,1/3]);
+  const xs=[-1,0,1,2];const ys=xs.map(x=>Math.pow(b,x));
+  const bStr=b===0.5?'1/2':b===1/3?'1/3':String(b);
+  return {
+    topic:'Identify base from table',
+    render(root){
+      root.innerHTML=`
+      <div class="problem-q">The table below came from $f(x)=b^x$ for some base $b$. Identify $b$.</div>
+      <div class="problem-inst">Hint: $f(1)=b$.</div>
+      <table class="xy"><tr><th>x</th>${xs.map(x=>`<td class="xv">${x}</td>`).join('')}</tr>
+      <tr><th>y</th>${ys.map(y=>`<td>${Number.isInteger(y)?y:y===0.5?'1/2':y===1/3?'1/3':y.toFixed(3)}</td>`).join('')}</tr></table>
+      <div class="features" style="margin-top:16px">
+        <label>Base $b$</label><input class="feat" data-f="b" placeholder="e.g. 2 or 1/2">
+      </div>`;
+      this._root=root;
+    },
+    check(){const root=this._root;const inp=root.querySelector('[data-f="b"]');const ok=match(inp.value,[bStr,String(b)])||fracEq(inp.value,b);inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');return {ok,msg:ok?'Correct.':`Accepted: ${bStr}`};},
+    showSolution(){this._root.querySelector('[data-f="b"]').value=bStr;}
+  };
+}
+
+/* ---- 6.1 RATIONAL EXPONENT ---- */
+function build_61_rational(){
+  const cases=[
+    {b:4,p:1,q:2,v:'2'},{b:8,p:1,q:3,v:'2'},{b:9,p:1,q:2,v:'3'},{b:16,p:1,q:4,v:'2'},{b:27,p:1,q:3,v:'3'},
+    {b:4,p:3,q:2,v:'8'},{b:8,p:2,q:3,v:'4'},{b:16,p:3,q:4,v:'8'},{b:25,p:1,q:2,v:'5'},
+    {b:4,p:-1,q:2,v:'1/2'},{b:9,p:-1,q:2,v:'1/3'},{b:8,p:-1,q:3,v:'1/2'}
+  ];
+  const c=pick(cases);
+  return {
+    topic:'Rational-exponent evaluation',
+    render(root){
+      root.innerHTML=`<div class="problem-q">Evaluate $${c.b}^{${c.p}/${c.q}}$.</div>
+      <div class="problem-inst">Use $b^{p/q}=\\sqrt[q]{b^p}$. Answer with a number or fraction.</div>
+      <div class="features" style="margin-top:12px"><label>Value</label><input class="feat" data-f="v" placeholder="number or fraction"></div>`;
+      this._root=root;
+    },
+    check(){const inp=this._root.querySelector('[data-f="v"]');const truth=parseFloat(eval(c.v.replace('/','/')));const ok=fracEq(inp.value,truth)||match(inp.value,[c.v]);inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');return {ok,msg:ok?'Correct.':`Accepted: ${c.v}`};},
+    showSolution(){this._root.querySelector('[data-f="v"]').value=c.v;}
+  };
+}
+
+/* ---- 6.1 APPLIED WORD PROBLEM ---- */
+function build_61_applied(){
+  const cases=[
+    ()=>{const init=pick([100,200,500,1000]);const factor=pick([2,3]);const t=rand(1,4);return {story:`A bacteria culture starts with ${init} cells and triples every hour (factor ${factor}). How many cells after ${t} hour${t>1?'s':''}?`,eq:`${init}\\cdot ${factor}^{${t}}`,ans:init*Math.pow(factor,t)};},
+    ()=>{const init=pick([1000,2000,5000]);const factor=pick([0.5,0.8,0.9]);const t=rand(1,3);const v=Math.round(init*Math.pow(factor,t));return {story:`An investment worth $${init} loses value by factor ${factor} each year. After ${t} year${t>1?'s':''}, what is its value (round to nearest whole)?`,eq:`${init}\\cdot ${factor}^{${t}}`,ans:v};},
+    ()=>{const init=pick([50,100,200]);const t=rand(2,5);return {story:`A population doubles every year starting at ${init}. What is the population after ${t} years?`,eq:`${init}\\cdot 2^{${t}}`,ans:init*Math.pow(2,t)};}
+  ];
+  const c=pick(cases)();
+  return {
+    topic:'Applied growth / decay',
+    render(root){
+      root.innerHTML=`<div class="problem-q">${c.story}</div>
+      <div class="problem-inst">Set up the expression $y=${c.eq}$ and evaluate.</div>
+      <div class="features" style="margin-top:12px"><label>Answer</label><input class="feat" data-f="v" placeholder="a number"></div>`;
+      this._root=root;
+    },
+    check(){const inp=this._root.querySelector('[data-f="v"]');const ok=fracEq(inp.value,c.ans);inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');return {ok,msg:ok?'Correct.':`Expected: ${c.ans}`};},
+    showSolution(){this._root.querySelector('[data-f="v"]').value=c.ans;}
+  };
+}
+
+/* ---- 6.1 REVERSE (solve for x) ---- */
+function build_61_reverse(){
+  const b=pick([2,3,5,10]);const x=rand(-3,4);const y=Math.pow(b,x);
+  const yStr=Number.isInteger(y)?String(y):`1/${Math.pow(b,-x)}`;
+  return {
+    topic:'Reverse: find the exponent',
+    render(root){
+      root.innerHTML=`<div class="problem-q">For $f(x)=${b}^x$, if $f(x)=${yStr}$, what is $x$?</div>
+      <div class="problem-inst">Rewrite the output as a power of ${b}, then read off the exponent.</div>
+      <div class="features" style="margin-top:12px"><label>$x=$</label><input class="feat" data-f="v" placeholder="integer"></div>`;
+      this._root=root;
+    },
+    check(){const inp=this._root.querySelector('[data-f="v"]');const ok=fracEq(inp.value,x);inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');return {ok,msg:ok?'Correct.':`x = ${x}`};},
+    showSolution(){this._root.querySelector('[data-f="v"]').value=x;}
+  };
+}
+
+/* ---- 6.2 GRAPH y=e^x (Ex 3) ---- */
+function build_62_e_graph(){
+  const xs=[-2,-1,0,1,2];const ys=xs.map(x=>Math.exp(x));
+  return {
+    topic:'Graph $y=e^x$ (Ex 3)',
+    render(root){
+      root.innerHTML=`
+      <div class="problem-q">Sketch $y=e^x$ using a table of values. Use $e\\approx 2.72$.</div>
+      <div class="problem-inst">Fill the table (round to 2 decimals), plot, and specify the features.</div>
+      <div class="grid-2col">
+        <div>
+          <h3>Table</h3>
+          <table class="xy"><tr><th>x</th>${xs.map(x=>`<td class="xv">${x}</td>`).join('')}</tr>
+          <tr><th>y</th>${xs.map((_,i)=>`<td><input class="cell" data-i="${i}" type="text"></td>`).join('')}</tr></table>
+          <h3>Features</h3>
+          <div class="features">
+            <label>Domain</label><input class="feat" data-f="dom" placeholder="(-inf, inf)">
+            <label>Range</label><input class="feat" data-f="rng" placeholder="(0, inf)">
+            <label>Asymptote</label><input class="feat" data-f="asy" placeholder="y=0">
+            <label>y-intercept</label><input class="feat" data-f="yi" placeholder="(0, 1)">
+          </div>
+        </div>
+        <div>
+          <h3>Graph</h3>
+          <div id="plot-host-${this._id}"></div>
+        </div>
+      </div>`;
+      this._root=root;
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:Math.exp,xmin:-3,xmax:3,ymin:-1,ymax:10,snapX:1,snapY:0.5,showTargets:xs.filter(x=>Math.exp(x)<=10),tolY:0.6});
+    },
+    check(){
+      const root=this._root;let ok=0;xs.forEach((x,i)=>{const inp=root.querySelector(`input.cell[data-i="${i}"]`);const v=parseFloat(inp.value);const good=Number.isFinite(v)&&Math.abs(v-ys[i])<0.1;inp.classList.toggle('good',good);inp.classList.toggle('bad',!good&&inp.value!=='');if(good)ok++;});
+      const checks={dom:['(-inf,inf)','(-infinity,infinity)','allreals','r'],rng:['(0,inf)','(0,infinity)'],asy:['y=0','0'],yi:['(0,1)','0,1']};let okF=0;for(const f of ['dom','rng','asy','yi']){const inp=root.querySelector(`input[data-f="${f}"]`);const good=match(inp.value,checks[f]);inp.classList.toggle('good',good);inp.classList.toggle('bad',!good&&inp.value!=='');if(good)okF++;}
+      const g=this._plot.grade();const total=xs.length+4+g.total;const got=ok+okF+g.good;
+      return {ok:got===total,msg:`Table: ${ok}/${xs.length} · Features: ${okF}/4 · Graph: ${g.good}/${g.total}`};
+    },
+    showSolution(){const root=this._root;xs.forEach((x,i)=>{root.querySelector(`input.cell[data-i="${i}"]`).value=ys[i].toFixed(2);});root.querySelector('[data-f="dom"]').value='(-inf, inf)';root.querySelector('[data-f="rng"]').value='(0, inf)';root.querySelector('[data-f="asy"]').value='y=0';root.querySelector('[data-f="yi"]').value='(0, 1)';this._plot.reveal();}
+  };
+}
+
+/* ---- 6.2 DESCRIBE TRANSFORMATION ---- */
+function build_62_describe(){
+  const b=pick([2,3,5]);const h=rand(-3,3);const k=rand(-3,3);
+  const refY=Math.random()<0.3,refX=Math.random()<0.3;
+  let expr=`${refX?'-':''}${b}^{${refY?'-':''}x${h>=0?'+'+h:h}}${k>=0?'+'+k:k}`;expr=expr.replace('+0','').replace('-0','');
+  const parts=[];
+  if(h>0)parts.push(`left ${h}`);if(h<0)parts.push(`right ${-h}`);
+  if(refY)parts.push(`reflect y-axis`);if(refX)parts.push(`reflect x-axis`);
+  if(k>0)parts.push(`up ${k}`);if(k<0)parts.push(`down ${-k}`);
+  if(!parts.length)parts.push('no change');
+  return {
+    topic:'Describe transformation',
+    render(root){
+      root.innerHTML=`<div class="problem-q">Describe how to get from $y=${b}^x$ to $y=${expr}$.</div>
+      <div class="problem-inst">List each step. Use words like "left 2", "up 3", "reflect x-axis". Order doesn't matter, separate with commas.</div>
+      <div class="features" style="margin-top:12px"><label>Steps</label><input class="feat" data-f="v" placeholder="e.g. left 1, up 2" style="min-width:280px"></div>`;
+      this._root=root;this._parts=parts;
+    },
+    check(){const inp=this._root.querySelector('[data-f="v"]');const v=nrm(inp.value);const expected=parts.map(p=>nrm(p));const ok=expected.every(e=>v.includes(e));inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');return {ok,msg:ok?'Correct.':`Expected: ${parts.join(', ')}`};},
+    showSolution(){this._root.querySelector('[data-f="v"]').value=parts.join(', ');}
+  };
+}
+
+/* ---- 6.2 MATCH ---- */
+function build_62_match(){
+  const b=pick([2,3]);const k=rand(-3,3);const h=rand(-3,3);
+  const correct=`y=${b}^{x${h>=0?'+'+h:h}}${k>=0?'+'+k:k}`.replace('+0','').replace('-0','');
+  const alts=[correct,`y=${b}^{x${-h>=0?'+'+(-h):(-h)}}${k>=0?'+'+k:k}`.replace('+0','').replace('-0',''),`y=${b}^{x${h>=0?'+'+h:h}}${-k>=0?'+'+(-k):(-k)}`.replace('+0','').replace('-0',''),`y=${b}^{-x${h>=0?'+'+h:h}}${k>=0?'+'+k:k}`.replace('+0','').replace('-0','')];
+  // shuffle
+  alts.sort(()=>Math.random()-0.5);
+  return {
+    topic:'Match features → equation',
+    render(root){
+      root.innerHTML=`<div class="problem-q">Which equation has asymptote $y=${k}$, y-intercept $(0, ${Math.pow(b,h)+k})$, and is shifted ${h>0?`left ${h}`:h<0?`right ${-h}`:'not shifted'} from $y=${b}^x$?</div>
+      <div class="problem-inst">Click the correct option.</div>
+      <div class="topic-row" style="flex-direction:column;align-items:stretch;gap:8px">${alts.map(a=>`<button type="button" class="match-opt" data-a="${a}" style="text-align:left;padding:10px 14px">$${a}$</button>`).join('')}</div>`;
+      this._root=root;this._correct=correct;this._picked=null;
+      root.querySelectorAll('.match-opt').forEach(btn=>{btn.onclick=()=>{this._picked=btn.dataset.a;root.querySelectorAll('.match-opt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');};});
+      typeset(root);
+    },
+    check(){if(!this._picked)return {ok:false,msg:'Pick an option first.'};const ok=this._picked===this._correct;this._root.querySelectorAll('.match-opt').forEach(b=>{if(b.dataset.a===this._correct)b.style.borderColor='var(--good)';else if(b.dataset.a===this._picked&&!ok)b.style.borderColor='var(--bad)';});return {ok,msg:ok?'Correct.':`Correct: $${this._correct}$`};},
+    showSolution(){this._root.querySelectorAll('.match-opt').forEach(b=>{if(b.dataset.a===this._correct){b.classList.add('active');b.style.borderColor='var(--good)';}});}
+  };
+}
+
+/* ---- 6.2 REFLECTION ---- */
+function build_62_reflect(){
+  const b=pick([2,3,5]);
+  const kind=pick(['neg_b','neg_x','both']);
+  const expr=kind==='neg_b'?`y=-${b}^x`:kind==='neg_x'?`y=${b}^{-x}`:`y=-${b}^{-x}`;
+  const answer=kind==='neg_b'?'x-axis':kind==='neg_x'?'y-axis':'both axes';
+  const acc=kind==='neg_b'?['x-axis','xaxis','x']:kind==='neg_x'?['y-axis','yaxis','y']:['both','bothaxes','x-axisandy-axis','bothx-axisandy-axis'];
+  return {
+    topic:'Reflection identification',
+    render(root){
+      root.innerHTML=`<div class="problem-q">Starting from $y=${b}^x$, which axis is reflected across to get $${expr}$?</div>
+      <div class="problem-inst">Type <code>x-axis</code>, <code>y-axis</code>, or <code>both</code>.</div>
+      <div class="features" style="margin-top:12px"><label>Reflected across</label><input class="feat" data-f="v" placeholder="x-axis / y-axis / both"></div>`;
+      this._root=root;
+    },
+    check(){const inp=this._root.querySelector('[data-f="v"]');const ok=match(inp.value,acc);inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');return {ok,msg:ok?'Correct.':`Answer: ${answer}`};},
+    showSolution(){this._root.querySelector('[data-f="v"]').value=answer;}
+  };
+}
+
+/* ---- 6.2 E-TRANSFORM (key points) ----
+   Parent y = e^x has canonical key points: (-1, 1/e), (0, 1), (1, e), (2, e^2).
+   Student chooses which parent points to work with, applies the transformations, fills in the new points, and plots.
+*/
+function build_62_e_transform(){
+  // Randomized transformation g(x) = c * e^{x+h} + k, or with reflection
+  const variants=[
+    {c:-2,h:1,k:5,disp:'g(x)=5-2e^{x+1}'},
+    {c:1,h:-2,k:-1,disp:'g(x)=e^{x-2}-1'},
+    {c:-1,h:0,k:3,disp:'g(x)=3-e^x'},
+    {c:2,h:1,k:0,disp:'g(x)=2e^{x+1}'},
+    {c:-1,h:-1,k:2,disp:'g(x)=2-e^{x-1}'},
+    {c:1,h:2,k:-3,disp:'g(x)=e^{x+2}-3'}
+  ];
+  const v=pick(variants);const {c,h,k,disp}=v;
+  const f=x=>c*Math.exp(x+h)+k;
+  // Parent key points (x, y) for y=e^x
+  const keyPoints=[{x:-1,y:'1/e',yNum:1/Math.E},{x:0,y:'1',yNum:1},{x:1,y:'e',yNum:Math.E},{x:2,y:'e^2',yNum:Math.E*Math.E}];
+  // Transformed key points: x_new = x_parent - h, y_new = c*y_parent + k
+  const transformed=keyPoints.map(p=>{
+    const xNew=p.x-h;
+    const yNew=c*p.yNum+k;
+    // Symbolic y: c*(parent_y) + k
+    let ySym;
+    if(p.y==='1')ySym=String(c+k);
+    else if(c===1)ySym=k===0?p.y:(k>0?`${p.y}+${k}`:`${p.y}${k}`);
+    else if(c===-1)ySym=k===0?`-${p.y}`:(k>0?`${k}-${p.y}`:`-${p.y}${k}`);
+    else ySym=k===0?`${c}${p.y}`:(k>0?`${c}${p.y}+${k}`:`${c}${p.y}${k}`);
+    return {xParent:p.x,yParent:p.y,xNew,yNew,ySym};
+  });
+  const asym=k;const isReflect=c<0;
+  return {
+    topic:'Transform $e^x$ via key points',
+    render(root){
+      root.innerHTML=`
+      <div class="problem-q">Transform the key points of $y=e^x$ to sketch $${disp}$.</div>
+      <div class="problem-inst">
+        <b>Step 1:</b> The parent $y=e^x$ has key points below.<br>
+        <b>Step 2:</b> Apply the transformations: x shifts by ${-h>=0?`+${-h}`:-h} (${h>0?`left ${h}`:h<0?`right ${-h}`:'no x-shift'}); y multiplies by ${c}${k>=0?` then adds ${k}`:` then subtracts ${-k}`}.<br>
+        <b>Step 3:</b> Fill the new points in the right column, then plot them on the graph.
+      </div>
+      <div class="grid-2col">
+        <div>
+          <h3>Key points</h3>
+          <table class="xy" style="font-size:13px">
+            <tr><th>Parent $(x, y)$ on $y=e^x$</th><th>New $(x, y)$ on $g(x)$</th></tr>
+            ${transformed.map((t,i)=>`<tr><td class="xv">(${t.xParent}, ${t.yParent})</td><td>(<input class="cell" data-i="x-${i}" type="text" style="width:52px" placeholder="x">, <input class="cell" data-i="y-${i}" type="text" style="width:62px" placeholder="y">)</td></tr>`).join('')}
+          </table>
+          <h3>Features</h3>
+          <div class="features">
+            <label>Horizontal asymptote</label><input class="feat" data-f="asy" placeholder="y=${k}">
+            <label>Range</label><input class="feat" data-f="rng" placeholder="${isReflect?'(-inf, '+k+')':'('+k+', inf)'}">
+            <label>Domain</label><input class="feat" data-f="dom" placeholder="(-inf, inf)">
+          </div>
+        </div>
+        <div>
+          <h3>Graph · plot the transformed points</h3>
+          <div id="plot-host-${this._id}"></div>
+        </div>
+      </div>`;
+      this._root=root;
+      // compute plot window from transformed points
+      const ys=transformed.map(t=>t.yNew).filter(y=>isFinite(y));
+      const yLo=Math.floor(Math.min(-2,...ys,asym-2));const yHi=Math.ceil(Math.max(10,...ys,asym+2));
+      const xs=transformed.map(t=>t.xNew);const xLo=Math.floor(Math.min(-3,...xs)-1);const xHi=Math.ceil(Math.max(3,...xs)+1);
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f,xmin:xLo,xmax:xHi,ymin:yLo,ymax:yHi,snapX:1,snapY:0.5,showTargets:transformed.filter(t=>t.yNew>=yLo&&t.yNew<=yHi).map(t=>t.xNew),tolY:0.8});
+      this._t=transformed;
+    },
+    check(){
+      const root=this._root;let okPts=0;
+      this._t.forEach((t,i)=>{
+        const ix=root.querySelector(`input[data-i="x-${i}"]`);const iy=root.querySelector(`input[data-i="y-${i}"]`);
+        const okx=fracEq(ix.value,t.xNew);
+        // accept either numerical or symbolic y
+        const oky=fracEq(iy.value,t.yNew)||match(iy.value,[t.ySym]);
+        ix.classList.toggle('good',okx);ix.classList.toggle('bad',!okx&&ix.value!=='');
+        iy.classList.toggle('good',oky);iy.classList.toggle('bad',!oky&&iy.value!=='');
+        if(okx&&oky)okPts++;
+      });
+      const checks={
+        asy:[`y=${k}`,String(k)],
+        rng:isReflect?[`(-inf,${k})`,`(-infinity,${k})`]:[`(${k},inf)`,`(${k},infinity)`],
+        dom:['(-inf,inf)','(-infinity,infinity)','allreals','r']
+      };
+      let okF=0;for(const f of ['asy','rng','dom']){const inp=root.querySelector(`input[data-f="${f}"]`);const good=match(inp.value,checks[f]);inp.classList.toggle('good',good);inp.classList.toggle('bad',!good&&inp.value!=='');if(good)okF++;}
+      const g=this._plot.grade();
+      const total=this._t.length+3+g.total;const got=okPts+okF+g.good;
+      return {ok:got===total,msg:`Points: ${okPts}/${this._t.length} · Features: ${okF}/3 · Graph: ${g.good}/${g.total}`};
+    },
+    showSolution(){
+      const root=this._root;
+      this._t.forEach((t,i)=>{root.querySelector(`input[data-i="x-${i}"]`).value=t.xNew;root.querySelector(`input[data-i="y-${i}"]`).value=Number.isInteger(t.yNew)?t.yNew:t.ySym;});
+      root.querySelector('[data-f="asy"]').value=`y=${k}`;
+      root.querySelector('[data-f="rng"]').value=isReflect?`(-inf, ${k})`:`(${k}, inf)`;
+      root.querySelector('[data-f="dom"]').value='(-inf, inf)';
+      this._plot.reveal();
+    }
   };
 }
 
@@ -857,8 +1225,8 @@ function build_64_asym(){
 
 /* ========== BUILDER REGISTRY ========== */
 const BUILDERS={
-  '61':{table:build_61_table,quick:build_61_quick},
-  '62':{transform:build_62_transform,quick:build_62_quick},
+  '61':{table:build_61_table,compare:build_61_compare,identify:build_61_identify,rational:build_61_rational,applied:build_61_applied,reverse:build_61_reverse,quick:build_61_quick},
+  '62':{transform:build_62_transform,e_graph:build_62_e_graph,e_transform:build_62_e_transform,describe:build_62_describe,match:build_62_match,reflect:build_62_reflect,quick:build_62_quick},
   '63':{conv:build_63_conv,solve:build_63_solve,cancel:build_63_cancel},
   '64':{graph:build_64_graph,domain:build_64_domain,asym:build_64_asym}
 };
@@ -869,9 +1237,13 @@ const currentProblem={};
 
 function buildSection(k){
   const host=$('#sec-'+k);
+  const [chap,title]=LABELS[k].split('·').map(s=>s.trim());
   host.innerHTML=`
-    <h1>${LABELS[k]}</h1>
-    <p class="page-sub">Read the notes, then work the problems. Each one mirrors the packet exactly.</p>
+    <div class="page-head">
+      <div class="page-eyebrow">Lesson ${chap}</div>
+      <h1>${title}</h1>
+      <p class="page-sub">Read the notes, then work the practice. Each format mirrors an example from the packet.</p>
+    </div>
 
     <div class="card lesson">
       <h2>Notes</h2>
