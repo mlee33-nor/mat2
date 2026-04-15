@@ -431,6 +431,7 @@ const PROBLEM_TYPES={
     {id:'transform',name:'Transformation sketch (Ex 2)',desc:'Fill table, plot, identify new asymptote / range / intercepts.'},
     {id:'e_graph',name:'Graph $y=e^x$ (Ex 3)',desc:'Table + plot for the natural base $e$.'},
     {id:'e_transform',name:'Transform $e^x$ (key points)',desc:'Like $g(x)=5-2e^{x+1}$: apply transforms to key points of $e^x$, then plot.'},
+    {id:'tricky',name:'⚡ Tricky transforms',desc:'Stretches, reflections, rewritten exponents like $b^{1-x}$, $3\\cdot(1/2)^x$, $-2 e^{-x+1}+5$.'},
     {id:'describe',name:'Describe transformation',desc:'List shifts / reflections from parent to target.'},
     {id:'match',name:'Match features → function',desc:'Given asymptote / shift info, pick the correct equation.'},
     {id:'reflect',name:'Reflection only',desc:'$-b^x$ vs $b^{-x}$ — identify what flipped.'},
@@ -981,6 +982,149 @@ function build_62_e_transform(){
   };
 }
 
+/* ---- 6.2 TRICKY TRANSFORMS ----
+   Stretches, reflections, rewritten exponents.
+   Multi-part: (1) rewrite exponent if needed, (2) list transforms, (3) asymptote/range/y-int, (4) plot.
+*/
+function build_62_tricky(){
+  // Each variant stores: disp, f(x), parent base b, exponent form for rewrite, transforms list, asymptote k, range bounds, yint
+  const variants=[
+    { // 3·(1/2)^x — stretch vertically by 3 on decay
+      disp:'g(x)=3\\cdot\\left(\\tfrac{1}{2}\\right)^x',
+      f:x=>3*Math.pow(0.5,x),b:'1/2',rewrite:null,
+      transforms:['vertical stretch by 3'],
+      k:0,asym:'y=0',rngReflect:false,
+      yint:3,parent:x=>Math.pow(0.5,x)
+    },
+    { // -2·3^x — reflect x-axis + stretch
+      disp:'g(x)=-2\\cdot 3^x',
+      f:x=>-2*Math.pow(3,x),b:'3',rewrite:null,
+      transforms:['reflect over x-axis','vertical stretch by 2'],
+      k:0,asym:'y=0',rngReflect:true,
+      yint:-2,parent:x=>Math.pow(3,x)
+    },
+    { // 2^(1-x) — needs rewrite to 2^(-(x-1))
+      disp:'g(x)=2^{1-x}',
+      f:x=>Math.pow(2,1-x),b:'2',rewrite:'2^{-(x-1)}',
+      transforms:['reflect over y-axis','shift right 1'],
+      k:0,asym:'y=0',rngReflect:false,
+      yint:2,parent:x=>Math.pow(2,x)
+    },
+    { // 3^(-x+2) — rewrite to 3^(-(x-2))
+      disp:'g(x)=3^{-x+2}',
+      f:x=>Math.pow(3,-x+2),b:'3',rewrite:'3^{-(x-2)}',
+      transforms:['reflect over y-axis','shift right 2'],
+      k:0,asym:'y=0',rngReflect:false,
+      yint:9,parent:x=>Math.pow(3,x)
+    },
+    { // 4 - 2^x — reflect + shift up
+      disp:'g(x)=4-2^x',
+      f:x=>4-Math.pow(2,x),b:'2',rewrite:'-2^x+4',
+      transforms:['reflect over x-axis','shift up 4'],
+      k:4,asym:'y=4',rngReflect:true,
+      yint:3,parent:x=>Math.pow(2,x)
+    },
+    { // -3(1/2)^x + 2
+      disp:'g(x)=-3\\cdot\\left(\\tfrac{1}{2}\\right)^x+2',
+      f:x=>-3*Math.pow(0.5,x)+2,b:'1/2',rewrite:null,
+      transforms:['reflect over x-axis','vertical stretch by 3','shift up 2'],
+      k:2,asym:'y=2',rngReflect:true,
+      yint:-1,parent:x=>Math.pow(0.5,x)
+    },
+    { // -2e^(-x+1) + 5
+      disp:'g(x)=-2e^{-x+1}+5',
+      f:x=>-2*Math.exp(-x+1)+5,b:'e',rewrite:'-2e^{-(x-1)}+5',
+      transforms:['reflect over y-axis','reflect over x-axis','vertical stretch by 2','shift right 1','shift up 5'],
+      k:5,asym:'y=5',rngReflect:true,
+      yint:-2*Math.E+5,parent:Math.exp
+    },
+    { // 2^(x/2) — horizontal stretch (harder, optional)
+      disp:'g(x)=\\tfrac{1}{2}\\cdot 2^{x+1}',
+      f:x=>0.5*Math.pow(2,x+1),b:'2',rewrite:'2^x',
+      transforms:['shift left 1','vertical stretch by 1/2'],
+      k:0,asym:'y=0',rngReflect:false,
+      yint:1,parent:x=>Math.pow(2,x)
+    },
+    { // 5 - 2e^(x+1) — revisits the one from the e section but here with rewrite emphasis
+      disp:'g(x)=5-2e^{x+1}',
+      f:x=>5-2*Math.exp(x+1),b:'e',rewrite:'-2e^{x+1}+5',
+      transforms:['reflect over x-axis','vertical stretch by 2','shift left 1','shift up 5'],
+      k:5,asym:'y=5',rngReflect:true,
+      yint:5-2*Math.E,parent:Math.exp
+    },
+    { // 2^(2-x) → 2^(-(x-2))
+      disp:'g(x)=2^{2-x}',
+      f:x=>Math.pow(2,2-x),b:'2',rewrite:'2^{-(x-2)}',
+      transforms:['reflect over y-axis','shift right 2'],
+      k:0,asym:'y=0',rngReflect:false,
+      yint:4,parent:x=>Math.pow(2,x)
+    }
+  ];
+  const v=pick(variants);
+  const needsRewrite=v.rewrite!==null;
+  return {
+    topic:'Tricky transform',
+    render(root){
+      root.innerHTML=`
+      <div class="problem-q">For $${v.disp}$:</div>
+      <div class="problem-inst">
+        ${needsRewrite?'<b>Step 1.</b> Rewrite the function so the exponent and coefficients are in a form where transformations are obvious. (Factor out $-1$ if the exponent has a leading $-x$; pull constant multipliers to the front.)<br>':''}
+        <b>Step ${needsRewrite?2:1}.</b> List every transformation applied to the parent $y=${v.b==='e'?'e^x':`${v.b}^x`}$ (comma-separated).<br>
+        <b>Step ${needsRewrite?3:2}.</b> Fill in the features.<br>
+        <b>Step ${needsRewrite?4:3}.</b> Plot a few key points and use the H-line tool to mark the asymptote.
+      </div>
+      <div class="grid-2col">
+        <div>
+          ${needsRewrite?`<h3>Rewritten form</h3><div class="features"><label>$g(x)=$</label><input class="feat" data-f="rewrite" placeholder="e.g. -2e^{-(x-1)}+5" style="min-width:260px"></div>`:''}
+          <h3>Transformations</h3>
+          <div class="features">
+            <label>Steps</label><input class="feat" data-f="trans" placeholder="e.g. reflect x-axis, shift up 3" style="min-width:320px">
+            <div class="features-hint">Use: "reflect x-axis", "reflect y-axis", "vertical stretch by N", "shift left/right N", "shift up/down N"</div>
+          </div>
+          <h3>Features</h3>
+          <div class="features">
+            <label>Asymptote</label><input class="feat" data-f="asy" placeholder="y=${v.k}">
+            <label>Range</label><input class="feat" data-f="rng" placeholder="${v.rngReflect?'(-inf, '+v.k+')':'('+v.k+', inf)'}">
+            <label>y-intercept</label><input class="feat" data-f="yi" placeholder="(0, ${Number.isInteger(v.yint)?v.yint:v.yint.toFixed(2)})">
+          </div>
+        </div>
+        <div>
+          <h3>Graph</h3>
+          <div id="plot-host-${this._id}"></div>
+        </div>
+      </div>`;
+      this._root=root;this._v=v;
+      // plot window
+      const ys=[v.yint,v.k,v.f(-1),v.f(0),v.f(1),v.f(2)].filter(y=>isFinite(y));
+      const yLo=Math.floor(Math.min(-2,...ys)-1);const yHi=Math.ceil(Math.max(10,...ys,v.k+2)+1);
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:v.f,xmin:-4,xmax:4,ymin:yLo,ymax:yHi,snapX:1,snapY:0.25,showTargets:[],tolY:0.5});
+    },
+    check(){
+      const root=this._root;const v=this._v;let okCount=0,total=0;
+      if(needsRewrite){const inp=root.querySelector('[data-f="rewrite"]');const truthNorm=nrm(v.rewrite);const userNorm=nrm(inp.value);const good=userNorm===truthNorm||userNorm===truthNorm.replace(/\\/g,'')||userNorm.replace(/\s/g,'')===truthNorm.replace(/\s/g,'');inp.classList.toggle('good',good);inp.classList.toggle('bad',!good&&inp.value!=='');if(good)okCount++;total++;}
+      // transforms: check all required words appear
+      const tInp=root.querySelector('[data-f="trans"]');const userT=nrm(tInp.value);const allPresent=v.transforms.every(t=>userT.includes(nrm(t).replace(/\s/g,'')));tInp.classList.toggle('good',allPresent);tInp.classList.toggle('bad',!allPresent&&tInp.value!=='');if(allPresent)okCount++;total++;
+      // features
+      const fAcc={
+        asy:[`y=${v.k}`,String(v.k)],
+        rng:v.rngReflect?[`(-inf,${v.k})`,`(-infinity,${v.k})`]:[`(${v.k},inf)`,`(${v.k},infinity)`],
+        yi:Number.isInteger(v.yint)?[`(0,${v.yint})`,String(v.yint)]:[`(0,${v.yint.toFixed(2)})`,v.yint.toFixed(2),`(0,${v.yint.toFixed(3)})`]
+      };
+      for(const f of ['asy','rng','yi']){const inp=root.querySelector(`input[data-f="${f}"]`);let good=match(inp.value,fAcc[f]);if(!good&&f==='yi'&&!Number.isInteger(v.yint)){const val=parseFloat(inp.value);if(Number.isFinite(val))good=Math.abs(val-v.yint)<0.05;const m=inp.value.match(/\(0,\s*([-\d.]+)\)/);if(m){const val2=parseFloat(m[1]);if(Math.abs(val2-v.yint)<0.05)good=true;}}inp.classList.toggle('good',good);inp.classList.toggle('bad',!good&&inp.value!=='');if(good)okCount++;total++;}
+      return {ok:okCount===total,msg:`${okCount}/${total} parts correct.`};
+    },
+    showSolution(){
+      const root=this._root;const v=this._v;
+      if(needsRewrite)root.querySelector('[data-f="rewrite"]').value=v.rewrite;
+      root.querySelector('[data-f="trans"]').value=v.transforms.join(', ');
+      root.querySelector('[data-f="asy"]').value=`y=${v.k}`;
+      root.querySelector('[data-f="rng"]').value=v.rngReflect?`(-inf, ${v.k})`:`(${v.k}, inf)`;
+      root.querySelector('[data-f="yi"]').value=Number.isInteger(v.yint)?`(0, ${v.yint})`:`(0, ${v.yint.toFixed(2)})`;
+      this._plot.reveal();
+    }
+  };
+}
+
 /* ---- 6.2 TRANSFORMATION ---- */
 function build_62_transform(){
   const variants=[
@@ -1308,7 +1452,7 @@ function build_64_asym(){
 /* ========== BUILDER REGISTRY ========== */
 const BUILDERS={
   '61':{table:build_61_table,compare:build_61_compare,identify:build_61_identify,rational:build_61_rational,applied:build_61_applied,reverse:build_61_reverse,quick:build_61_quick},
-  '62':{transform:build_62_transform,e_graph:build_62_e_graph,e_transform:build_62_e_transform,describe:build_62_describe,match:build_62_match,reflect:build_62_reflect,quick:build_62_quick},
+  '62':{transform:build_62_transform,e_graph:build_62_e_graph,e_transform:build_62_e_transform,tricky:build_62_tricky,describe:build_62_describe,match:build_62_match,reflect:build_62_reflect,quick:build_62_quick},
   '63':{conv:build_63_conv,solve:build_63_solve,cancel:build_63_cancel},
   '64':{graph:build_64_graph,domain:build_64_domain,asym:build_64_asym}
 };
