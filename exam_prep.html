@@ -139,9 +139,12 @@
   .tile-foot{display:flex;justify-content:space-between;margin-top:10px;font-size:11.5px;color:var(--muted)}
 
   /* plotter */
-  .plot-host{background:#0a0c13;border:1px solid var(--border);border-radius:8px;padding:6px;position:relative;max-width:460px}
+  .plot-host{background:#0a0c13;border:1px solid var(--border);border-radius:8px;padding:8px;position:relative;max-width:640px}
   .plot-host svg{display:block;width:100%;height:auto;cursor:crosshair;touch-action:none;user-select:none}
-  .plot-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .plot-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+  .plot-mode{display:inline-flex;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:2px;gap:2px;margin-right:6px}
+  .plot-mode button{background:transparent;color:var(--muted);border:0;padding:5px 10px;border-radius:4px;font:inherit;font-size:12px;cursor:pointer}
+  .plot-mode button.active{background:var(--accent-soft);color:#fff}
   .plot-status{font-size:12px;color:var(--muted);margin-top:8px}
   .plot-status b{color:#fff}
   .legend{display:flex;gap:12px;font-size:11.5px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
@@ -181,6 +184,8 @@
   <button class="nav-btn" data-go="62"><span class="num">6.2</span>Transforms / e</button>
   <button class="nav-btn" data-go="63"><span class="num">6.3</span>Logarithms</button>
   <button class="nav-btn" data-go="64"><span class="num">6.4</span>Log Graphs</button>
+  <div class="nav-group">Skills</div>
+  <button class="nav-btn" data-go="commonbase"><span class="num">⚡</span>Solve w/ common bases</button>
   <div class="nav-group">Practice</div>
   <button class="nav-btn" data-go="exam"><span class="num">📝</span>Mixed Drill</button>
   <button class="nav-btn" data-go="cheatsheet"><span class="num">📄</span>Cheat Sheet</button>
@@ -233,6 +238,36 @@
 <section class="section" id="sec-62"></section>
 <section class="section" id="sec-63"></section>
 <section class="section" id="sec-64"></section>
+
+<!-- COMMON BASE SOLVING -->
+<section class="section" id="sec-commonbase">
+  <div class="page-head">
+    <div class="page-eyebrow">Skill</div>
+    <h1>Solving with Common Bases</h1>
+    <p class="page-sub">Use the one-to-one property: rewrite both sides as a power of the same base, then set exponents equal. Essential skill bridging 6.1 → 6.3.</p>
+  </div>
+  <div class="card lesson">
+    <h2>Strategy</h2>
+    <ol>
+      <li>Identify the smallest base that divides both sides. e.g. for $8^x=16$, both are powers of <b>2</b>.</li>
+      <li>Rewrite: $8=2^3$, $16=2^4$, so $2^{3x}=2^4$.</li>
+      <li>One-to-one property: $3x=4 \Rightarrow x=\tfrac{4}{3}$.</li>
+    </ol>
+    <div class="note"><b>Common substitutions:</b>
+      <ul>
+        <li>$4=2^2$, $8=2^3$, $16=2^4$, $32=2^5$, $64=2^6$</li>
+        <li>$9=3^2$, $27=3^3$, $81=3^4$</li>
+        <li>$25=5^2$, $125=5^3$</li>
+        <li>$\tfrac{1}{b^n}=b^{-n}$ · $\sqrt{b}=b^{1/2}$ · $\sqrt[3]{b}=b^{1/3}$</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Practice</h2>
+    <div class="meta">Solve each equation for $x$. Answers may be fractions like <code>3/2</code> or negatives.</div>
+    <div id="problem-commonbase"></div>
+  </div>
+</section>
 
 <!-- EXAM -->
 <section class="section" id="sec-exam">
@@ -310,12 +345,19 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 function typeset(r){if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise(r?[r]:undefined).catch(()=>{});}
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast._);toast._=setTimeout(()=>t.classList.remove('show'),2200);}
 function nrm(s){if(s==null)return '';return String(s).toLowerCase().replace(/\s+/g,'').replace(/\*/g,'').replace(/∞/g,'infinity').replace(/infty/g,'infinity').replace(/\binf\b/g,'infinity').replace(/−/g,'-').replace(/–/g,'-').replace(/\+-/g,'-');}
-function numEq(u,v){const a=parseFloat(u),b=parseFloat(v);if(Number.isFinite(a)&&Number.isFinite(b))return Math.abs(a-b)<1e-6;return false;}
+function numEq(u,v){const a=parseFloat(u),b=parseFloat(v);if(Number.isFinite(a)&&Number.isFinite(b))return Math.abs(a-b)<Math.max(1e-4,Math.abs(b)*0.02);return false;}
 function fracEq(u,truth){if(u==null)return false;const s=String(u).trim();if(!s)return false;const m=s.match(/^-?\d+\/-?\d+$/);if(m){const [n,d]=s.split('/').map(Number);if(d!==0)return Math.abs(n/d-truth)<1e-6;}return numEq(s,truth);}
+function fmtFrac(y){
+  if(Number.isInteger(y))return String(y);
+  if(y<0){const r=fmtFrac(-y);return '-'+r;}
+  if(y>0&&y<1){const inv=1/y;if(Math.abs(inv-Math.round(inv))<1e-6)return `1/${Math.round(inv)}`;}
+  for(const d of [2,3,4,5,6,7,8,9,10,12,16,25,27,32,64]){const n=y*d;if(Math.abs(n-Math.round(n))<1e-6)return `${Math.round(n)}/${d}`;}
+  return y.toFixed(4).replace(/0+$/,'').replace(/\.$/,'');
+}
 function match(u,acc){const v=nrm(u);if(!v)return false;return acc.map(nrm).some(a=>a===v);}
 
 /* ========== STATE ========== */
-const LABELS={overview:'Dashboard','61':'6.1 · Exponential Functions','62':'6.2 · Transformations & e','63':'6.3 · Logarithms','64':'6.4 · Log Graphs',exam:'Mixed Drill',cheatsheet:'Cheat Sheet'};
+const LABELS={overview:'Dashboard','61':'6.1 · Exponential Functions','62':'6.2 · Transformations & e','63':'6.3 · Logarithms','64':'6.4 · Log Graphs',commonbase:'Skill · Common Bases',exam:'Mixed Drill',cheatsheet:'Cheat Sheet'};
 let stats=JSON.parse(localStorage.getItem('mat151_v4')||'{}');
 function save(){localStorage.setItem('mat151_v4',JSON.stringify(stats));}
 function S(k){return stats[k]||(stats[k]={correct:0,total:0,streak:0,best:0});}
@@ -409,24 +451,30 @@ const typeState={'61':'table','62':'transform','63':'conv','64':'graph'};
 
 /* ========== MINI PLOTTER ========== */
 function MiniPlot(opts){
-  const {host,f,dom,xmin=-4,xmax=4,ymin=-2,ymax=10,snapX=1,snapY=0.5,showTargets=[],tolX=0.01,tolY=0.5}=opts;
-  const W=380,H=280,pad={l:36,r:10,t:10,b:26};
-  let points=[];let showTruth=false;
+  const {host,f,dom,xmin=-4,xmax=4,ymin=-2,ymax=10,snapX=1,snapY=0.5,showTargets=[],tolY=0.5}=opts;
+  const W=560,H=400,pad={l:44,r:14,t:14,b:32};
+  let points=[];let guides=[];let mode='point';let showTruth=false;
   const el=document.createElement('div');
   el.className='plot-host';el.innerHTML='<svg></svg>';
   host.appendChild(el);
 
-  // status + controls
   const ctrl=document.createElement('div');ctrl.className='plot-controls';
   ctrl.innerHTML=`
+    <div class="plot-mode" data-role="mode">
+      <button data-m="point" class="active" title="Click to drop points">Plot points</button>
+      <button data-m="hline" title="Click anywhere to draw a horizontal dashed line (asymptote)">H-line</button>
+      <button data-m="vline" title="Click anywhere to draw a vertical dashed line">V-line</button>
+    </div>
     <button class="btn btn-sm" data-a="undo">Undo</button>
-    <button class="btn btn-sm" data-a="clear">Clear</button>
+    <button class="btn btn-sm" data-a="clear">Clear all</button>
+    <button class="btn btn-sm" data-a="clearGuides">Clear guides</button>
     <button class="btn btn-sm btn-primary" data-a="reveal">Show correct curve</button>`;
   host.appendChild(ctrl);
   const stat=document.createElement('div');stat.className='plot-status';host.appendChild(stat);
-  const legend=document.createElement('div');legend.className='legend';legend.innerHTML=`<span><span class="sw" style="background:var(--accent)"></span>Your sketch</span><span><span class="sw" style="background:#4ade80;background-image:repeating-linear-gradient(90deg,#4ade80 0 4px,transparent 4px 8px)"></span>Correct curve (click "Show correct curve" to reveal)</span>`;host.appendChild(legend);
+  const legend=document.createElement('div');legend.className='legend';legend.innerHTML=`<span><span class="sw" style="background:var(--accent)"></span>Your points</span><span><span class="sw" style="background:#fbbf24;background-image:repeating-linear-gradient(90deg,#fbbf24 0 4px,transparent 4px 8px)"></span>Your guide lines</span><span><span class="sw" style="background:#4ade80;background-image:repeating-linear-gradient(90deg,#4ade80 0 4px,transparent 4px 8px)"></span>Correct curve (reveal)</span>`;host.appendChild(legend);
 
-  ctrl.querySelectorAll('button').forEach(b=>b.onclick=()=>{const a=b.dataset.a;if(a==='undo')points.pop();if(a==='clear'){points=[];showTruth=false;}if(a==='reveal')showTruth=!showTruth;render();});
+  ctrl.querySelectorAll('[data-m]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.m;ctrl.querySelectorAll('[data-m]').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+  ctrl.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.a;if(a==='undo'){if(points.length)points.pop();else if(guides.length)guides.pop();}if(a==='clear'){points=[];guides=[];showTruth=false;}if(a==='clearGuides')guides=[];if(a==='reveal')showTruth=!showTruth;render();}));
 
   function xP(x){return pad.l+(x-xmin)/(xmax-xmin)*(W-pad.l-pad.r);}
   function yP(y){return pad.t+(ymax-y)/(ymax-ymin)*(H-pad.t-pad.b);}
@@ -439,11 +487,11 @@ function MiniPlot(opts){
     const ax=Math.max(pad.t,Math.min(H-pad.b,yP(0)));const ay=Math.max(pad.l,Math.min(W-pad.r,xP(0)));
     s+=`<line x1="${pad.l}" y1="${ax}" x2="${W-pad.r}" y2="${ax}" stroke="#526079" stroke-width="1.2"/>`;
     s+=`<line x1="${ay}" y1="${pad.t}" x2="${ay}" y2="${H-pad.b}" stroke="#526079" stroke-width="1.2"/>`;
-    for(let x=Math.ceil(xmin);x<=Math.floor(xmax);x++){if(x===0)continue;s+=`<text x="${xP(x)}" y="${ax+13}" fill="#7a849e" font-size="10" text-anchor="middle" font-family="JetBrains Mono">${x}</text>`;}
-    for(let y=Math.ceil(ymin);y<=Math.floor(ymax);y++){if(y===0)continue;s+=`<text x="${ay-6}" y="${yP(y)+3}" fill="#7a849e" font-size="10" text-anchor="end" font-family="JetBrains Mono">${y}</text>`;}
+    for(let x=Math.ceil(xmin);x<=Math.floor(xmax);x++){if(x===0)continue;s+=`<text x="${xP(x)}" y="${ax+14}" fill="#7a849e" font-size="11" text-anchor="middle" font-family="JetBrains Mono">${x}</text>`;}
+    for(let y=Math.ceil(ymin);y<=Math.floor(ymax);y++){if(y===0)continue;s+=`<text x="${ay-7}" y="${yP(y)+4}" fill="#7a849e" font-size="11" text-anchor="end" font-family="JetBrains Mono">${y}</text>`;}
     return s;
   }
-  function truthPath(){if(!f)return '';const N=240;let d='',started=false;
+  function truthPath(){if(!f)return '';const N=280;let d='',started=false;
     for(let i=0;i<=N;i++){const x=xmin+(xmax-xmin)*i/N;
       if(dom){if(x<=dom.min||x>=dom.max){started=false;continue;}}
       const y=f(x);if(!isFinite(y)||y<ymin-20||y>ymax+20){started=false;continue;}
@@ -451,14 +499,20 @@ function MiniPlot(opts){
     return d;
   }
   function smoothPath(pts){if(pts.length<2)return '';const s=pts.slice().sort((a,b)=>a.x-b.x);const P=s.map(p=>({x:xP(p.x),y:yP(p.y)}));if(P.length===2)return `M ${P[0].x} ${P[0].y} L ${P[1].x} ${P[1].y}`;let d=`M ${P[0].x} ${P[0].y}`;for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||P[i+1];const c1x=p1.x+(p2.x-p0.x)/6,c1y=p1.y+(p2.y-p0.y)/6;const c2x=p2.x-(p3.x-p1.x)/6,c2y=p2.y-(p3.y-p1.y)/6;d+=` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;}return d;}
+  function guidesMarkup(){
+    return guides.map(g=>{
+      if(g.type==='h'){const y=yP(g.value);return `<line x1="${pad.l}" y1="${y}" x2="${W-pad.r}" y2="${y}" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.9"/><text x="${W-pad.r-4}" y="${y-4}" fill="#fbbf24" font-size="11" text-anchor="end" font-family="JetBrains Mono">y=${g.value}</text>`;}
+      else{const x=xP(g.value);return `<line x1="${x}" y1="${pad.t}" x2="${x}" y2="${H-pad.b}" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.9"/><text x="${x+4}" y="${pad.t+12}" fill="#fbbf24" font-size="11" font-family="JetBrains Mono">x=${g.value}</text>`;}
+    }).join('');
+  }
   function render(){
     const userPath=points.length>=2?smoothPath(points):'';
-    const svg=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+    const svg=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" preserveAspectRatio="xMidYMid meet">
       ${axes()}
-      ${showTruth?`<path d="${truthPath()}" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-dasharray="4 4" opacity="0.9"/>`:''}
-      ${/* target point markers hidden so they don't give away the answer */''}
-      <path d="${userPath}" fill="none" stroke="#7aa2ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      ${points.map(p=>`<circle cx="${xP(p.x)}" cy="${yP(p.y)}" r="4.5" fill="#7aa2ff" stroke="#fff" stroke-width="1.3"/>`).join('')}
+      ${guidesMarkup()}
+      ${showTruth?`<path d="${truthPath()}" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="5 4" opacity="0.9"/>`:''}
+      <path d="${userPath}" fill="none" stroke="#7aa2ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      ${points.map(p=>`<circle cx="${xP(p.x)}" cy="${yP(p.y)}" r="5" fill="#7aa2ff" stroke="#fff" stroke-width="1.3"/>`).join('')}
     </svg>`;
     el.innerHTML=svg;
     const s=el.querySelector('svg');
@@ -470,17 +524,24 @@ function MiniPlot(opts){
     const px=(ev.clientX-r.left)*(W/r.width);
     const py=(ev.clientY-r.top)*(H/r.height);
     if(px<pad.l||px>W-pad.r||py<pad.t||py>H-pad.b)return;
-    const x=snap(Xp(px),snapX);
-    const y=snap(Yp(py),snapY);
-    const i=points.findIndex(p=>Math.abs(p.x-x)<snapX*0.4);
-    if(i>=0)points[i]={x,y};else points.push({x,y});
+    if(mode==='point'){
+      const x=snap(Xp(px),snapX);const y=snap(Yp(py),snapY);
+      const i=points.findIndex(p=>Math.abs(p.x-x)<snapX*0.4);
+      if(i>=0)points[i]={x,y};else points.push({x,y});
+    } else if(mode==='hline'){
+      const y=snap(Yp(py),snapY);
+      if(!guides.some(g=>g.type==='h'&&Math.abs(g.value-y)<snapY*0.4))guides.push({type:'h',value:y});
+    } else if(mode==='vline'){
+      const x=snap(Xp(px),snapX);
+      if(!guides.some(g=>g.type==='v'&&Math.abs(g.value-x)<snapX*0.4))guides.push({type:'v',value:x});
+    }
     render();
   }
   function updateStatus(){
-    const n=points.length;
-    if(!showTargets.length){stat.innerHTML=`Points: <b>${n}</b>`;return;}
+    const n=points.length,gn=guides.length;
+    if(!showTargets.length){stat.innerHTML=`Points: <b>${n}</b> · Guides: <b>${gn}</b> · Mode: <b>${mode==='point'?'plot':mode==='hline'?'horizontal line':'vertical line'}</b>`;return;}
     let good=0;for(const t of showTargets){const yt=f(t);if(!isFinite(yt))continue;const p=points.find(pt=>Math.abs(pt.x-t)<snapX*0.4);if(p&&Math.abs(p.y-yt)<=tolY)good++;}
-    stat.innerHTML=`Plotted <b>${n}</b> / target ${showTargets.length}. Correct placements: <b style="color:${good===showTargets.length?'var(--good)':good>0?'var(--warn)':'var(--muted)'}">${good}/${showTargets.length}</b>`;
+    stat.innerHTML=`Plotted <b>${n}</b> / target ${showTargets.length}. Correct placements: <b style="color:${good===showTargets.length?'var(--good)':good>0?'var(--warn)':'var(--muted)'}">${good}/${showTargets.length}</b> · Guides: <b>${gn}</b> · Mode: <b>${mode==='point'?'plot':mode==='hline'?'H-line':'V-line'}</b>`;
   }
   render();
   return {
@@ -536,10 +597,10 @@ function build_61_table(){
         </div>
       </div>`;
       this._root=root;
-      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:x=>Math.pow(b,x),xmin:-4,xmax:4,ymin:-1,ymax:Math.max(10,ymax),snapX:1,snapY:0.5,showTargets:xs.filter(x=>Math.pow(b,x)<=10),tolY:0.5});
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:x=>Math.pow(b,x),xmin:-4,xmax:4,ymin:-1,ymax:Math.max(10,ymax),snapX:1,snapY:0.25,showTargets:xs.filter(x=>Math.pow(b,x)<=10),tolY:0.5});
     },
     check(){
-      const root=this._root;let okCells=0;xs.forEach((x,i)=>{const inp=root.querySelector(`input.cell[data-i="${i}"]`);const truth=ys[i];const ok=fracEq(inp.value,truth)||nrm(inp.value)===nrm('1/'+Math.round(1/truth))||nrm(inp.value)===nrm(truth.toString());inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');if(ok)okCells++;});
+      const root=this._root;let okCells=0;xs.forEach((x,i)=>{const inp=root.querySelector(`input.cell[data-i="${i}"]`);const truth=ys[i];const ok=fracEq(inp.value,truth);inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');if(ok)okCells++;});
       const feats={dom:['(-infinity,infinity)','(-inf,inf)','allreals','r'],rng:['(0,infinity)','(0,inf)'],asy:['y=0','0'],yi:['(0,1)','0,1']};
       let okFeat=0;for(const f of ['dom','rng','asy','yi']){const inp=root.querySelector(`input[data-f="${f}"]`);const ok=match(inp.value,feats[f]);inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');if(ok)okFeat++;}
       const g=this._plot.grade();
@@ -548,7 +609,7 @@ function build_61_table(){
     },
     showSolution(){
       const root=this._root;
-      xs.forEach((x,i)=>{const inp=root.querySelector(`input.cell[data-i="${i}"]`);const y=ys[i];inp.value=Number.isInteger(y)?y:(y>=0.125?`1/${Math.round(1/y)}`:y.toFixed(3));});
+      xs.forEach((x,i)=>{root.querySelector(`input.cell[data-i="${i}"]`).value=fmtFrac(ys[i]);});
       root.querySelector('[data-f="dom"]').value='(-inf, inf)';
       root.querySelector('[data-f="rng"]').value='(0, inf)';
       root.querySelector('[data-f="asy"]').value='y=0';
@@ -615,7 +676,7 @@ function build_61_compare(){
       </div>`;
       this._root=root;
       const ymax=Math.ceil(Math.max(...y1,...y2,10));
-      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:x=>Math.pow(b1,x),xmin:-3,xmax:3,ymin:-1,ymax:Math.min(ymax,16),snapX:1,snapY:0.5,showTargets:xs.filter(x=>Math.pow(b1,x)<=12),tolY:0.5});
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:x=>Math.pow(b1,x),xmin:-3,xmax:3,ymin:-1,ymax:Math.min(ymax,16),snapX:1,snapY:0.25,showTargets:xs.filter(x=>Math.pow(b1,x)<=12),tolY:0.5});
     },
     check(){
       const root=this._root;let okCells=0;
@@ -626,7 +687,7 @@ function build_61_compare(){
       return {ok:got===total,msg:`Tables: ${okCells}/${xs.length*2} · Comparison: ${okSteep?'✓':'✗'}`};
     },
     showSolution(){
-      const root=this._root;xs.forEach((x,i)=>{root.querySelector(`input.cell[data-i="1-${i}"]`).value=Number.isInteger(y1[i])?y1[i]:`1/${Math.round(1/y1[i])}`;root.querySelector(`input.cell[data-i="2-${i}"]`).value=Number.isInteger(y2[i])?y2[i]:`1/${Math.round(1/y2[i])}`;});
+      const root=this._root;xs.forEach((x,i)=>{root.querySelector(`input.cell[data-i="1-${i}"]`).value=fmtFrac(y1[i]);root.querySelector(`input.cell[data-i="2-${i}"]`).value=fmtFrac(y2[i]);});
       const steeper=mode==='growth'?(b1>b2?'y_1':'y_2'):(b1<b2?'y_2':'y_1');
       root.querySelector('[data-f="steep"]').value=steeper;
     }
@@ -743,7 +804,7 @@ function build_62_e_graph(){
         </div>
       </div>`;
       this._root=root;
-      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:Math.exp,xmin:-3,xmax:3,ymin:-1,ymax:10,snapX:1,snapY:0.5,showTargets:xs.filter(x=>Math.exp(x)<=10),tolY:0.6});
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f:Math.exp,xmin:-3,xmax:3,ymin:-1,ymax:10,snapX:1,snapY:0.25,showTargets:xs.filter(x=>Math.exp(x)<=10),tolY:0.6});
     },
     check(){
       const root=this._root;let ok=0;xs.forEach((x,i)=>{const inp=root.querySelector(`input.cell[data-i="${i}"]`);const v=parseFloat(inp.value);const good=Number.isFinite(v)&&Math.abs(v-ys[i])<0.1;inp.classList.toggle('good',good);inp.classList.toggle('bad',!good&&inp.value!=='');if(good)ok++;});
@@ -885,7 +946,7 @@ function build_62_e_transform(){
       const ys=transformed.map(t=>t.yNew).filter(y=>isFinite(y));
       const yLo=Math.floor(Math.min(-2,...ys,asym-2));const yHi=Math.ceil(Math.max(10,...ys,asym+2));
       const xs=transformed.map(t=>t.xNew);const xLo=Math.floor(Math.min(-3,...xs)-1);const xHi=Math.ceil(Math.max(3,...xs)+1);
-      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f,xmin:xLo,xmax:xHi,ymin:yLo,ymax:yHi,snapX:1,snapY:0.5,showTargets:transformed.filter(t=>t.yNew>=yLo&&t.yNew<=yHi).map(t=>t.xNew),tolY:0.8});
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f,xmin:xLo,xmax:xHi,ymin:yLo,ymax:yHi,snapX:1,snapY:0.25,showTargets:transformed.filter(t=>t.yNew>=yLo&&t.yNew<=yHi).map(t=>t.xNew),tolY:0.8});
       this._t=transformed;
     },
     check(){
@@ -986,7 +1047,7 @@ function build_62_transform(){
         </div>
       </div>`;
       this._root=root;
-      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f,xmin:-4,xmax:4,ymin,ymax,snapX:1,snapY:0.5,showTargets:xs,tolY:0.5});
+      this._plot=MiniPlot({host:root.querySelector('#plot-host-'+this._id),f,xmin:-4,xmax:4,ymin,ymax,snapX:1,snapY:0.25,showTargets:xs,tolY:0.5});
     },
     check(){
       const root=this._root;let okCells=0;xs.forEach((x,i)=>{const inp=root.querySelector(`input.cell[data-i="${i}"]`);const truth=ys[i];const ok=fracEq(inp.value,truth);inp.classList.toggle('good',ok);inp.classList.toggle('bad',!ok&&inp.value!=='');if(ok)okCells++;});
@@ -998,7 +1059,7 @@ function build_62_transform(){
     },
     showSolution(){
       const root=this._root;
-      xs.forEach((x,i)=>{const inp=root.querySelector(`input.cell[data-i="${i}"]`);const y=ys[i];inp.value=Number.isInteger(y)?y:y.toFixed(3);});
+      xs.forEach((x,i)=>{root.querySelector(`input.cell[data-i="${i}"]`).value=fmtFrac(ys[i]);});
       root.querySelector('[data-f="dom"]').value='(-inf, inf)';
       root.querySelector('[data-f="rng"]').value=refX?`(-inf, ${k})`:`(${k}, inf)`;
       root.querySelector('[data-f="asy"]').value=`y=${k}`;
@@ -1252,6 +1313,61 @@ const BUILDERS={
   '64':{graph:build_64_graph,domain:build_64_domain,asym:build_64_asym}
 };
 
+/* ========== COMMON BASES SKILL ========== */
+function build_commonbase(){
+  // Each problem shows 5 sub-problems of increasing difficulty
+  function gcdv(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a;}
+  function fracStr(n,d){const g=gcdv(n,d);const nn=n/g,dd=d/g;if(dd===1)return String(nn);return `${nn}/${dd}`;}
+  const templates=[
+    // simple b^x = b^k
+    ()=>{const b=pick([2,3,5]);const k=rand(2,5);return {q:`$${b}^x = ${Math.pow(b,k)}$`,a:[String(k)],s:`$${b}^x=${b}^{${k}}$, so $x=${k}$.`};},
+    // rewrite single side: a^x = b where b is a power of a
+    ()=>{const base=pick([2,3]);const exp=rand(2,4);const pwr=rand(2,4);const left=Math.pow(base,exp);const right=Math.pow(base,exp*pwr);return {q:`$${left}^x = ${right}$`,a:[String(pwr)],s:`$${left}=${base}^{${exp}}$, $${right}=${base}^{${exp*pwr}}$. Equation: $${base}^{${exp}x}=${base}^{${exp*pwr}}$, so $${exp}x=${exp*pwr}$ ⇒ $x=${pwr}$.`};},
+    // fractional result: a^x = b where exponents don't divide evenly
+    ()=>{const base=pick([2,3]);const p=rand(2,3);const q=rand(1,2);const left=Math.pow(base,p);const rightExp=p*q+1;const right=Math.pow(base,rightExp);return {q:`$${left}^x = ${right}$`,a:[fracStr(rightExp,p)],s:`$${left}^x=${base}^{${p}x}=${base}^{${rightExp}}$, so $${p}x=${rightExp}$ ⇒ $x=${fracStr(rightExp,p)}$.`};},
+    // negative: a^x = 1/b
+    ()=>{const b=pick([2,3,5]);const k=rand(2,4);const val=Math.pow(b,k);return {q:`$${b}^x = \\tfrac{1}{${val}}$`,a:[String(-k)],s:`$\\tfrac{1}{${val}}=${b}^{-${k}}$, so $x=-${k}$.`};},
+    // different bases, both powers of same base: 9^x = 27
+    ()=>{const base=pick([2,3,5]);const p=pick([2,3]);const q=pick([3,4,5]);if(p===q)return templates[4]();const left=Math.pow(base,p);const right=Math.pow(base,q);return {q:`$${left}^x = ${right}$`,a:[fracStr(q,p)],s:`$${left}=${base}^{${p}}$, $${right}=${base}^{${q}}$. So $${base}^{${p}x}=${base}^{${q}}$ ⇒ $x=${fracStr(q,p)}$.`};},
+    // with shift: b^(x+c) = b^k
+    ()=>{const b=pick([2,3,5]);const c=rand(-3,3);const k=rand(-2,4);return {q:`$${b}^{x${c>=0?'+'+c:c}} = ${Math.pow(b,k)}$`.replace('+0','').replace('-0',''),a:[String(k-c)],s:`RHS = $${b}^{${k}}$. Exponents: $x${c>=0?'+'+c:c}=${k}$ ⇒ $x=${k-c}$.`};},
+    // harder: 4^(x-1) = 8
+    ()=>{const base=pick([2,3]);const p=pick([2,3]);const c=rand(-2,2);const rightExp=p*1+1;const left=Math.pow(base,p);const right=Math.pow(base,rightExp);return {q:`$${left}^{x${c>=0?'+'+c:c}} = ${right}$`.replace('+0','').replace('-0',''),a:[fracStr(rightExp-p*c,p)],s:`$${left}^{x${c>=0?'+'+c:c}}=${base}^{${p}(x${c>=0?'+'+c:c})}=${base}^{${rightExp}}$ ⇒ $${p}(x${c>=0?'+'+c:c})=${rightExp}$ ⇒ $x=${fracStr(rightExp-p*c,p)}$.`};}
+  ];
+  const picks=[];const idxs=[0,1,2,3,4,5,6];idxs.sort(()=>Math.random()-0.5);
+  for(let i=0;i<5;i++)picks.push(templates[idxs[i]]());
+  return {
+    topic:'Solve using common bases',
+    render(root){
+      root.innerHTML=`<div class="problem-q">Solve each equation for $x$.</div>
+      <div class="problem-inst">Rewrite both sides with the same base, then set exponents equal.</div>
+      <div class="solve-list">${picks.map((p,i)=>`<div class="solve-row"><span class="lbl">${'abcde'[i]})</span><span class="q">${p.q}</span><input type="text" data-i="${i}" placeholder="x = ?"></div>`).join('')}</div>`;
+      this._root=root;this._picks=picks;
+    },
+    check(){const root=this._root;let ok=0;this._picks.forEach((p,i)=>{const inp=root.querySelector(`input[data-i="${i}"]`);const good=match(inp.value,p.a)||fracEq(inp.value,parseFloat(p.a[0].includes('/')?(()=>{const[n,d]=p.a[0].split('/');return n/d;})():p.a[0]));inp.classList.toggle('good',good);inp.classList.toggle('bad',!good&&inp.value!=='');if(good)ok++;});return {ok:ok===this._picks.length,msg:`Got ${ok}/${this._picks.length} correct.`};},
+    showSolution(){this._picks.forEach((p,i)=>{this._root.querySelector(`input[data-i="${i}"]`).value=p.a[0];});}
+  };
+}
+let _cbProb=null;
+function newCommonBase(){
+  _cbProb=build_commonbase();_cbProb._id=++_pid;
+  const host=$('#problem-commonbase');
+  host.innerHTML=`<div class="problem-box">
+    <div class="problem-header"><span class="tag">${_cbProb.topic}</span></div>
+    <div id="cb-render"></div>
+    <div class="controls-row" style="margin-top:16px">
+      <button class="btn btn-primary" onclick="checkCB()">Check all</button>
+      <button class="btn" onclick="solveCB()">Show answers</button>
+      <button class="btn btn-subtle" onclick="newCommonBase()">New problem ↻</button>
+    </div>
+    <div id="cb-fb"></div>
+  </div>`;
+  _cbProb.render($('#cb-render'));
+  typeset($('#problem-commonbase'));
+}
+function checkCB(){if(!_cbProb)return;const r=_cbProb.check();const fb=$('#cb-fb');fb.className='answer-feedback '+(r.ok?'good':'bad');fb.innerHTML=(r.ok?'✓ All correct.':'Keep going — ')+r.msg;bump('63',r.ok);}
+function solveCB(){if(_cbProb)_cbProb.showSolution();}
+
 /* ========== SECTION RENDERING ========== */
 let _pid=0;
 const currentProblem={};
@@ -1280,11 +1396,17 @@ function buildSection(k){
   `;
   const tr=$('#types-'+k);
   PROBLEM_TYPES[k].forEach(t=>{
-    const b=document.createElement('button');b.textContent=t.name;b.title=t.desc;
+    const b=document.createElement('button');b.innerHTML=t.name;b.title=t.desc;b.type='button';
     if(t.id===typeState[k])b.classList.add('active');
-    b.onclick=()=>{typeState[k]=t.id;tr.querySelectorAll('button').forEach(x=>x.classList.remove('active'));b.classList.add('active');newProblem(k);};
+    b.addEventListener('click',()=>{
+      typeState[k]=t.id;
+      tr.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      newProblem(k);
+    });
     tr.appendChild(b);
   });
+  typeset(tr);
   newProblem(k);
 }
 
@@ -1349,6 +1471,7 @@ function revealOne(i){const it=examState.items[i];$('#exs-'+i).innerHTML=`<div c
 
 /* ========== INIT ========== */
 ['61','62','63','64'].forEach(buildSection);
+newCommonBase();
 renderStats();go('overview');typeset();
 </script>
 </body>
